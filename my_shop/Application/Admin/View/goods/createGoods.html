@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>添加商品</title>
+        <include file="./Public/AdminCommon/head.html" />
+    </head>
+    <body>
+        <form action="__APP__/Admin/Goods/createGoods" method="post" enctype="multipart/form-data">
+        <table class="table table-bordered">
+            <tr>
+                <td>
+                    所属分类
+                </td>
+                <td>
+                    <select name="cid">
+                        <volist name="list" id="vo">
+                            <option value="{$vo.goodscat_id}">
+                                <if condition="$vo.lev eq 1">
+                                    |--{$vo.goodscat_name}
+                                    <elseif condition="$vo.lev eq 2" />
+                                    &nbsp;&nbsp;&nbsp;&nbsp; |--{$vo.goodscat_name}
+                                </if>
+                            </option>
+                        </volist>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    商品名字
+                </td>
+                <td>
+                    <input type="text" name="name"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    商品价格
+                </td>
+                <td>
+                    <input type="text" name="price"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    商品图片
+                </td>
+                <td>
+                    <input type="file" name="pic"/>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    商品描述
+                </td>
+                <td>
+                  <textarea id="desc" name="desc" rows="20">
+                      <p>请输入内容...</p>
+                  </textarea>
+                                      <!-- <script id="container" name="desc" type="text/plain" style="width:100%;height:350px"></script> -->
+              </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit"/>
+                </td>
+            </tr>
+        </table>
+    </form>
+
+
+    </body>
+    <include file="./Public/AdminCommon/js.html" />
+<js href='__PUBLIC__/wangEditor/dist/js/wangEditor.min.js' />
+<script type="text/javascript">
+    var editor = new wangEditor('desc');
+    editor.create();
+</script>
+</html>
