@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head lang="cn">
+
+    <include file="./Public/HomeCommon/head.html" />
+    <title>订单结算页</title>
+</head>
+<body>
+
+
+<div class="ui container">
+    <include file="./Public/HomeCommon/nav.html" />
+
+
+
+
+    <div class="ui grid">
+        <div class="sixteen wide column">
+
+
+          <h2>订单结算页</h2>
+
+          <form class="" action="__URL__/orderProcess" method="post">
+
+
+            <volist name="addrs" id='addrone'>
+              <div>
+                <span data-addr-id="{$addrone.addr_id}" data-click="0" class="ppp" style="border:1px solid;width:200px">{$addrone.addr_name} {$addrone.addr_city}</span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span> {$addrone.addr_phone}&nbsp;&nbsp; {$addrone.addr_content}</span>
+              </div>
+              <br>
+
+            </volist>
+            <input id="addrinput" type="hidden" name="addr_id" value="">
+            <table class="ui celled table">
+              <thead>
+                <tr>
+                  <th>名称</th>
+                  <th>图片</th>
+                  <th>单价</th>
+                  <th>数量</th>
+                </tr>
+              </thead>
+
+              <volist name="res" id='vo'>
+
+
+              <input type="hidden" name="gidstr" value="{$str}">
+              </tr>
+                <tr>
+                  <td>{$vo.goods_name}</td>
+                  <td><img width="50px" height="50px"src="{$vo.goods_pic}" alt="" /></td>
+                    <td>{$vo[goods_price]/100}</td>
+                  <td>{$vo.mycart_quantity}</td>
+
+                </tr>
+
+                </volist>
+              </table>
+              <input type="hidden" name="price" value="{$price}">
+              <span>总价：{$price/100}</span>
+              <input type="submit" name="" value="结算" id="submit" >
+
+              </form>
+
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+
+<include file="./Public/HomeCommon/js.html" />
+<script type="text/javascript">
+
+function contains(a, obj) {
+        for (var i = 0; i < a.length; i++) {
+            if (a[i] === obj) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+  $(document).ready(function(){
+    $('.ppp').click(function() {
+      // console.log('dadd');
+        $('.ppp').css('background-color','white');
+        $('.ppp').attr('data-click','0')
+      $(this).css('background-color','red');
+      $(this).attr('data-click','1')
+      var val = $(this).attr('data-addr-id');
+      console.log(val);
+      $('#addrinput').val(val);
+    });
+
+    $('#submit').click(function(){
+      var arr = new Array();
+      var i = 0;
+        $('.ppp').each(function() {
+          arr[i] = $(this).attr('data-click');
+           i++;
+        });
+        if (contains(arr,'1')) {
+
+        } else {
+
+
+          layer.alert('您还没有选择收获地址呢');
+
+          return false;
+        }
+    });
+
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+</html>

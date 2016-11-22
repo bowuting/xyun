@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head lang="cn">
+
+    <include file="./Public/HomeCommon/head.html" />
+
+</head>
+<body>
+
+
+<div class="ui container">
+
+    <include file="./Public/HomeCommon/nav.html" />
+
+    <div class="ui grid">
+
+        <div class="eight wide column">
+
+          <h2 class="ui header">{$goodsInfo['goods_name']}</h2>
+
+          <hr>
+
+          <h3 class="ui header">商品货号：{$goodsInfo['goods_id']}</h3>
+          <h3 class="ui header">{$goodsInfo['goods_desc']}</h3>
+          <h3 class="ui header">上架时间：{$goodsInfo.goods_createtime|date="Y-m-d  ",###}</h3>
+          <h3 class="ui header">￥:{$goodsInfo['goods_price'] / 100}</h3>
+          <img src="{$goodsInfo['goods_pic']}" alt="" />
+        </div>
+          <div class="three wide column">
+            <form class=""  method="post">
+              <button type="button" class="" id="reduce-btn">-</button>
+              <input id="num" style="width:30px" type="text" name="num" value="1">
+              <button type="button" name="add" class="" id="add-btn">+</button>
+
+              <!-- <input type="button" name="name" value="加入购物车" class="ui primary button add-shopcart-btn"> -->
+              <button type="button"class="ui primary button add-shopcart-btn"><i class="add to cart icon"></i>加入购物车 </button>
+
+              </form>
+            <hr>
+
+
+          </div>
+
+    </div>
+
+</div>
+
+</body>
+
+<include file="./Public/HomeCommon/js.html" />
+<script type="text/javascript">
+    $(document).ready(function(){
+
+      $(".add-shopcart-btn").click(function(){
+        // alert('加入购物车');
+        var goodsid="{$Think.get.goods_id}";
+        var num = $('#num').val();
+        var isgoods = "1";
+
+        $.post("__URL__/addshopcart",
+          {
+            goodsid:goodsid,
+            num:num,
+            isgoods:isgoods
+          },
+          function (data,status) {
+
+            if (data == 1) {
+              layer.alert('添加成功');
+            } else {
+              layer.alert('添加失败');
+            }
+          });
+          // alert('加入购物车');
+      });
+
+      $("#add-btn").click(function(){
+          var val = $('#num').val();
+          val = parseInt(val);
+          val += 1;
+          $('#num').val(val);
+          // console.log(val);
+
+    });
+
+    $("#reduce-btn").click(function(){
+        var val = $('#num').val();
+        val = parseInt(val);
+        if (val <= 1) {
+          val = 1;
+          $('#num').val(val);
+          layer.alert('不能再减了');
+          return false;
+        }
+
+        val -= 1;
+        $('#num').val(val);
+        // console.log(val);
+
+  });
+
+
+
+
+
+    });
+</script>
+
+</html>
