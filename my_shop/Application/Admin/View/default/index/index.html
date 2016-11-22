@@ -1,0 +1,149 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+
+    <title>商品分类</title>
+
+    <include file="./Public/AdminCommon/head.html" />
+
+  </head>
+
+  <body>
+
+      <include file="./Public/AdminCommon/nav.html" />
+
+
+      <div class="container">
+
+              <button type="button" class="btn btn-primary create_btn"><i class="glyphicon glyphicon-plus"> 新增 </i></button>
+
+              <hr>
+
+                  <table class="table  table-bordered table-hover table-striped ">
+                      <tr>
+                          <td>
+                              分类名称
+                          </td>
+                          <td>
+                              排序
+                          </td>
+                          <td>
+                              创建时间
+                          </td>
+                          <td>
+                              编辑
+                          </td>
+                          <td>
+                              删除
+                          </td>
+                      </tr>
+                      <volist name="list" id="vo">
+                          <tr>
+                              <td>
+                                  <if condition="$vo.lev eq 1">
+                                      |--{$vo.goodscat_name}
+                                  <elseif condition="$vo.lev eq 2" />
+                                      &nbsp;&nbsp;&nbsp;&nbsp; |--{$vo.goodscat_name}
+                                  </if>
+                              </td>
+
+                              <td>
+                                  {$vo.goodscat_sort}
+                              </td>
+                              <td>
+                                  {$vo.goodscat_createtime|date="Y-m-d  H:i:s",###}
+                              </td>
+                              <td>
+                                  <button type="button" class="btn btn-primary update_btn"  data-id="{$vo.goodscat_id}" ><i class="glyphicon glyphicon-pencil"> 编辑 </i></button>
+                              </td>
+                              <td>
+                                  <button type="button" class="btn btn-danger delete_btn"  data-id="{$vo.goodscat_id}" ><i class="glyphicon glyphicon-remove"> 删除 </i></button>
+                              </td>
+                          </tr>
+                      </volist>
+                  </table>
+
+
+
+      </div> <!-- container  -->
+
+
+
+
+
+  </body>
+  <include file="./Public/AdminCommon/js.html" />
+
+  <script type="text/javascript">
+
+
+    $(document).ready(function(){
+
+      $('.update_btn').click(function(){
+        var id = $(this).attr('data-id');
+        layer.open({                                  // 更新 打开弹窗
+          type: 2,
+          skin: 'layui-layer-rim',
+          title:'修改商品分类',
+          area: ['600px', '360px'],
+          shadeClose: true, //点击遮罩关闭
+          content: '__URL__/updateGoodsCat/id/' + id,
+        // content: '__APP__/Admin/index/createGoodsCat',
+        cancel:function() {
+            location.reload();
+          }
+        });
+      });
+
+
+
+      $('.delete_btn').click(function(){
+        var id = $(this).attr('data-id');
+        // attr() 方法设置或返回被选元素的属性和值。
+        // 当该方法用于返回属性值，则返回第一个匹配元素的值。
+        // 当该方法用于设置属性值，则为匹配元素设置一个或多个属性/值对。
+        // console.log(id);
+      $.get("__URL__/deleteGoodsCat/id/" + id,   // Ajax GET  请求
+        function (status) {
+          if (status == 1) {
+            layer.open({
+            content: '删除成功',
+            btn: ['好的'],
+            yes: function(){
+                window.location.reload()},
+            // cancel: function(){
+            //     //右上角关闭回调
+            //     window.location.reload()}
+              });
+            }
+        });
+        });
+
+
+
+
+
+      $('.create_btn').click(function(){
+          layer.open({                              // 添加  打开弹窗
+            type: 2,
+            skin: 'layui-layer-rim',
+            title:'新增商品分类',
+            area: ['600px', '360px'],
+            shadeClose: true, //点击遮罩关闭
+            content: '__URL__/createGoodsCat',
+            //content: '__APP__/Admin/index/createGoodsCat',
+          cancel:function() {
+              location.reload();
+            }
+          });
+      });
+    });  // ready(function(){ 结束
+
+
+
+    </script>
+
+
+</html>
