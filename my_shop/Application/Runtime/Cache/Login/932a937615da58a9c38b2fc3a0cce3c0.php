@@ -20,37 +20,37 @@
 
     <br>
 <div class="ui menu">
-    <a class="item" href="/github/my_shop/index.php/Home/">
+    <a class="item" href="/xyun/my_shop/index.php/Home/">
         首页
     </a>
-    <a class="item" href="/github/my_shop/index.php/admin/">
+    <a class="item" href="/xyun/my_shop/index.php/admin/">
         后台
     </a>
-    <a class="item" href="/github/my_shop/index.php/Home/Index/gallery">
+    <a class="item" href="/xyun/my_shop/index.php/Home/Index/gallery">
         商品列表
     </a>
     <?php
  if(empty($_SESSION['uid'])){ ?>
-        <a class="item" href="/github/my_shop/index.php/Login/Index/registerFirst">
+        <a class="item" href="/xyun/my_shop/index.php/Login/Index/registerFirst">
             注册
         </a>
-        <a class="item" href="/github/my_shop/index.php/Login/Index/signin">
+        <a class="item" href="/xyun/my_shop/index.php/Login/Index/signin">
             登录
         </a>
 
     <?php  } else { ?>
 
-      <a class="item" href="/github/my_shop/index.php/Login/Index/signout">
+      <a class="item" href="/xyun/my_shop/index.php/Login/Index/signout">
           登出
       </a>
-      <a  class="item" href="/github/my_shop/index.php/Login/Index/me">
+      <a  class="item" href="/xyun/my_shop/index.php/Login/Index/me">
           个人中心
       </a>
     <?php  } ?>
 
-    <a  class="item" href="/github/my_shop/index.php/Home/Index/shopcart">我的购物车</a>
+    <a  class="item" href="/xyun/my_shop/index.php/Home/Index/shopcart">我的购物车</a>
 
-    <!-- <form class="item" action="/github/my_shop/index.php/Home/Index/gallery" method="get">
+    <!-- <form class="item" action="/xyun/my_shop/index.php/Home/Index/gallery" method="get">
       <div class="ui input">
           <input id="search" type="text"  name="keyword" placeholder="Search...">
           <button id="searchbtn" type="submit" class="ui basic button">商品搜索</button>
@@ -103,7 +103,7 @@
                 </p><?php endforeach; endif; else: echo "" ;endif; ?>
 
 
-            <form class="" class="ui form"action="/github/my_shop/index.php/Login/Index/addaddress" method="post">
+            <form class="" class="ui form"action="/xyun/my_shop/index.php/Login/Index/addaddress" method="post">
               <table class="ui celled table">
                 <input type="hidden" name="uid" id="uid" value="<?php echo ($info["user_id"]); ?>">
                 <tr>
@@ -172,7 +172,7 @@
         var city = $('[name="city"]').val();
         var qu = $('[name="qu"]').val();
 
-        $.post("/github/my_shop/index.php/Login/Index/addaddress",
+        $.post("/xyun/my_shop/index.php/Login/Index/addaddress",
           {
           uid :uid,
           name:name,
