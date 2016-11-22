@@ -161,7 +161,11 @@ function contains(a, obj) {
         if (contains(arr,'1')) {
 
         } else {
-          layer.alert('您还没有选择地址呢');
+
+
+
+          layer.alert('您还没有选择收获地址呢');
+
           return false;
         }
     });
