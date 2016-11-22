@@ -19,37 +19,35 @@
 <div class="ui container">
     <br>
 <div class="ui menu">
-    <a class="item" href="/think/index.php/Home/">
+    <a class="item" href="/xyun/my_shop/index.php/Home/">
         首页
     </a>
-    <a class="item" href="/think/index.php/admin/">
+    <a class="item" href="/xyun/my_shop/index.php/admin/">
         后台
     </a>
-    <a class="item" href="/think/index.php/Home/Index/gallery">
+    <a class="item" href="/xyun/my_shop/index.php/Home/Index/gallery">
         商品列表
     </a>
     <?php
  if(empty($_SESSION['uid'])){ ?>
-        <a class="item" href="/think/index.php/Login/Index/registerFirst">
-            注册
-        </a>
-        <a class="item" href="/think/index.php/Login/Index/signin">
+      
+        <a class="item" href="/xyun/my_shop/index.php/Login/Index/signin">
             登录
         </a>
 
     <?php  } else { ?>
 
-      <a class="item" href="/think/index.php/Login/Index/signout">
+      <a class="item" href="/xyun/my_shop/index.php/Login/Index/signout">
           登出
       </a>
-      <a  class="item" href="/think/index.php/Login/Index/me">
+      <a  class="item" href="/xyun/my_shop/index.php/Login/Index/me">
           个人中心
       </a>
     <?php  } ?>
 
-    <a  class="item" href="/think/index.php/Home/Index/shopcart">我的购物车</a>
+    <a  class="item" href="/xyun/my_shop/index.php/Home/Index/shopcart">我的购物车</a>
 
-    <!-- <form class="item" action="/think/index.php/Home/Index/gallery" method="get">
+    <!-- <form class="item" action="/xyun/my_shop/index.php/Home/Index/gallery" method="get">
       <div class="ui input">
           <input id="search" type="text"  name="keyword" placeholder="Search...">
           <button id="searchbtn" type="submit" class="ui basic button">商品搜索</button>
@@ -71,7 +69,7 @@
 
           <h2>订单结算页</h2>
 
-          <form class="" action="/think/index.php/Home/Index/orderProcess" method="post">
+          <form class="" action="/xyun/my_shop/index.php/Home/Index/orderProcess" method="post">
 
 
             <?php if(is_array($addrs)): $i = 0; $__LIST__ = $addrs;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$addrone): $mod = ($i % 2 );++$i;?><div>

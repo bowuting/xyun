@@ -164,7 +164,7 @@ class IndexController extends Controller {
             } else {
                 $result=$UserModel->add();
                 if($result>0){
-                    $this->redirect('signin');
+                    $this->success('注册成功',__APP__.'/Login/Index/signin');
                     exit;
                 }else{
                     $this->error("注册失败");

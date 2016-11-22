@@ -12,7 +12,87 @@
 
     <include file="./Public/HomeCommon/nav.html" />
     <div class="ui grid">
-        <div class="sixteenth wide column">
+
+
+      <div class="five wide column">
+
+      </div>
+      <div class="six wide column">
+
+        <div class="ui middle aligned center aligned grid" style="margin-top:50%;">
+          <div class="column">
+            <form class="ui large form" action="__URL__/register" method="post">
+              <div class="ui stacked segment">
+
+                <div class="field">
+                  <div class="ui left icon input">
+                    <!-- <i class="user icon"></i> -->
+                    <input type="text" name="phone"  value="{$data.phone}" disabled="disabled">
+                    <input type="hidden" name="phone_last" value="{$data.phone}">
+                    <!-- <input type="text" name="phone" placeholder="手机" data-rule="手机号码: required;" > -->
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="ui left icon input">
+                    <!-- <i class="lock icon"></i> -->
+                    <!-- <input type="password" name="passwd" placeholder="密码" data-rule="密码: required;" > -->
+                    <button class="ui icon button" id="send_button">
+                      <span>发送短信验证码</span>
+                     <!-- <i class="search icon"></i> -->
+                   </button>
+                    <input type="text" name="smscode" placeholder="短信验证码"
+                    data-rule="验证码: required; remote[post:__APP__/Login/Index/ajaxCheckSmsVerity, smscode, phone];">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="ui left icon input">
+                    <!-- <i class="user icon"></i> -->
+                    <input type="text"  name="name"  value="" placeholder="用户名" data-rule="用户名: required;">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="ui left icon input">
+                    <!-- <i class="user icon"></i> -->
+                    <input type="password" name="passwd"  value="" placeholder="密码" data-rule="密码: required;">
+                  </div>
+                </div>
+
+                <div class="field">
+                  <div class="ui left icon input">
+                    <!-- <i class="user icon"></i> -->
+                    <input type="password" name="reppasswd"  value="" placeholder="重复密码" data-rule="确认密码: required; match[passwd];">
+                  </div>
+                </div>
+
+
+
+                <br>
+                <input id="submit" type="submit" class="ui fluid large teal submit button" name="" value="注册">
+
+              </div>
+
+              <div class="ui error message"></div>
+
+            </form>
+
+            <div class="ui message">
+              <p>已有账号? <a href="__APP__/Login/Index/signin">立即登录</a></p>
+            </div>
+
+          </div>
+        </div>
+      </div><!-- end six wide column -->
+
+      <div class="five wide column">
+
+      </div>
+
+
+
+        <!-- <div class="sixteenth wide column">
             <form class="" action="__URL__/register" method="post">
               <table class="ui table">
                 <tr>
@@ -79,7 +159,7 @@
 
                 <input class="ui primary button" type="submit"  value="提交">
             </form>
-        </div>
+        </div> -->
 
     </div>
 

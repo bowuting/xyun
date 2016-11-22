@@ -19,37 +19,35 @@
 <div class="ui container">
     <br>
 <div class="ui menu">
-    <a class="item" href="/think/index.php/Home/">
+    <a class="item" href="/xyun/my_shop/index.php/Home/">
         首页
     </a>
-    <a class="item" href="/think/index.php/admin/">
+    <a class="item" href="/xyun/my_shop/index.php/admin/">
         后台
     </a>
-    <a class="item" href="/think/index.php/Home/Index/gallery">
+    <a class="item" href="/xyun/my_shop/index.php/Home/Index/gallery">
         商品列表
     </a>
     <?php
  if(empty($_SESSION['uid'])){ ?>
-        <a class="item" href="/think/index.php/Login/Index/registerFirst">
-            注册
-        </a>
-        <a class="item" href="/think/index.php/Login/Index/signin">
+      
+        <a class="item" href="/xyun/my_shop/index.php/Login/Index/signin">
             登录
         </a>
 
     <?php  } else { ?>
 
-      <a class="item" href="/think/index.php/Login/Index/signout">
+      <a class="item" href="/xyun/my_shop/index.php/Login/Index/signout">
           登出
       </a>
-      <a  class="item" href="/think/index.php/Login/Index/me">
+      <a  class="item" href="/xyun/my_shop/index.php/Login/Index/me">
           个人中心
       </a>
     <?php  } ?>
 
-    <a  class="item" href="/think/index.php/Home/Index/shopcart">我的购物车</a>
+    <a  class="item" href="/xyun/my_shop/index.php/Home/Index/shopcart">我的购物车</a>
 
-    <!-- <form class="item" action="/think/index.php/Home/Index/gallery" method="get">
+    <!-- <form class="item" action="/xyun/my_shop/index.php/Home/Index/gallery" method="get">
       <div class="ui input">
           <input id="search" type="text"  name="keyword" placeholder="Search...">
           <button id="searchbtn" type="submit" class="ui basic button">商品搜索</button>
@@ -68,7 +66,7 @@
  	          <p>名字 : <input type="text" ng-model="name"></p>
  	          <h1>Hello {{name}}</h1>
           </div> -->
-          <form class="" action="/think/index.php/Home/Index/order" method="post">
+          <form class="" action="/xyun/my_shop/index.php/Home/Index/order" method="post">
               <table class="ui celled table">
                 <thead>
                   <tr>
@@ -170,7 +168,7 @@ $(document).ready(function(){
         if (con == 'add') {
 
 
-          $.post("/think/index.php/Home/Index/addshopcart",
+          $.post("/xyun/my_shop/index.php/Home/Index/addshopcart",
             {
               goodsid:goodsid,
               num:quantity + 1,
@@ -198,7 +196,7 @@ $(document).ready(function(){
           }
 
 
-          $.post("/think/index.php/Home/Index/addshopcart",
+          $.post("/xyun/my_shop/index.php/Home/Index/addshopcart",
             {
               goodsid:goodsid,
               num:quantity - 1,
@@ -318,7 +316,7 @@ $(document).ready(function(){
           //
           //
           //
-          //            $.post("/think/index.php/Home/Index/order",
+          //            $.post("/xyun/my_shop/index.php/Home/Index/order",
           //              {
           //                goodsids:str,
           //              },
@@ -336,12 +334,12 @@ $(document).ready(function(){
           //                     title:'结算',
           //                     area: ['1200px', '900px'],
           //                     // shadeClose: true, //点击遮罩关闭
-          //                      content: '/think/index.php/Home/Index/orderProcess',
+          //                      content: '/xyun/my_shop/index.php/Home/Index/orderProcess',
           //                     closeBtn: 2,
           //                   shift: 0,
           //                   maxmin: true,
           //                   moveType: 0,
-          //                     //content: '/think/index.php/Admin/index/createGoodsCat',
+          //                     //content: '/xyun/my_shop/index.php/Admin/index/createGoodsCat',
           //                   cancel:function() {
           //                       location.reload();
           //                     }

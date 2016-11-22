@@ -31,9 +31,7 @@
     </a>
     <?php
  if(empty($_SESSION['uid'])){ ?>
-        <a class="item" href="/xyun/my_shop/index.php/Login/Index/registerFirst">
-            注册
-        </a>
+      
         <a class="item" href="/xyun/my_shop/index.php/Login/Index/signin">
             登录
         </a>
@@ -116,7 +114,7 @@
         var num = $('#num').val();
         var isgoods = "1";
 
-        $.post("/xyun/my_shop/index.php/home/index/addshopcart",
+        $.post("/xyun/my_shop/index.php/Home/Index/addshopcart",
           {
             goodsid:goodsid,
             num:num,

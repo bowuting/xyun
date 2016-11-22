@@ -16,9 +16,9 @@
 <body>
 
 
-<div class="ui container">
+  <div class="ui container">
 
-    <br>
+      <br>
 <div class="ui menu">
     <a class="item" href="/xyun/my_shop/index.php/Home/">
         首页
@@ -60,51 +60,69 @@
     </div>
 </div>
 
-    <div class="ui grid">
-        <div class="four wide column">
-        </div>
 
-        <div class="eight wide column">
-            <div class="" style="height:140px;">
+      <div class="ui grid">
 
+          <div class="five wide column">
+
+          </div>
+          <div class="six wide column">
+
+            <div class="ui middle aligned center aligned grid" style="margin-top:50%;">
+              <div class="column">
+                <form class="ui large form" action="/xyun/my_shop/index.php/Login/Index/registerSecond" method="post">
+                  <div class="ui stacked segment">
+
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <!-- <i class="user icon"></i> -->
+                        <input type="text" name="phone" placeholder="手机号码"
+                        data-ok=''
+                        data-rule-phone="[/^1[3-9]\d{9}$/, '请输入正确的手机号码']"
+                        data-rule="手机号码: required; phone;remote[post:/xyun/my_shop/index.php/Login/Index/ajaxIsThisPhoneRegistered/, phone];">
+                        <!-- <input type="text" name="phone" placeholder="手机" data-rule="手机号码: required;" > -->
+                      </div>
+                    </div>
+
+                    <div class="field">
+                      <div class="ui left icon input">
+                        <!-- <i class="lock icon"></i> -->
+                        <!-- <input type="password" name="passwd" placeholder="密码" data-rule="密码: required;" > -->
+                        <input type="text" name="verify" placeholder="验证码"
+                        data-ok=''
+                        data-rule="验证码: required; remote[post:/xyun/my_shop/index.php/Login/Index/ajaxCheckVerify/, verify];">
+                      </div>
+                    </div>
+
+                    <div class="class="field"">
+                      <img id="verify" src="<?php echo U('Login/Index/verify');?>" alt="verify_code"  onclick="fleshVerify()">
+                      <span class="ui content">点击图片更换验证码</span>
+                    </div>
+
+                    <br>
+                    <input id="submit" type="submit" class="ui fluid large teal submit button" name="" value="下一步">
+
+                  </div>
+
+                  <div class="ui error message"></div>
+
+                </form>
+
+                <div class="ui message">
+                  <p>已有账号? <a href="/xyun/my_shop/index.php/Login/Index/signin">立即登录</a></p>
+                </div>
+
+              </div>
             </div>
+          </div><!-- end six wide column -->
 
-            <form class="" action="/xyun/my_shop/index.php/Login/Index/registerSecond" method="post">
-                <table class="ui table">
-                    <tr>
-                        <td>
-                            <p class="">
-                                手机号码
-                            </p>
-                        </td>
-                        <td>
-                            <div class="ui input">
-                                <input type="text" name="phone" placeholder="手机号码"
-                                data-ok=''
-                                data-rule-phone="[/^1[3-9]\d{9}$/, '请输入正确的手机号码']"
-                                data-rule="手机号码: required; phone;remote[post:/xyun/my_shop/index.php/Login/Index/ajaxIsThisPhoneRegistered/, phone];">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <img id="verify" src="<?php echo U('Login/Index/verify');?>" alt="verify_code"  onclick="fleshVerify()" >
-                            点击图片刷新验证码
-                        </td>
-                        <td>
-                            <div class="ui input">
-                                <input type="text" name="verify" placeholder="验证码"
-                                data-ok=''
-                                data-rule="验证码: required; remote[post:/xyun/my_shop/index.php/Login/Index/ajaxCheckVerify/, verify];">
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            <input class="ui primary button" type="submit"  value="提交"  >
-            </form>
-        </div>
-    </div>
-</div>
+          <div class="five wide column">
+
+          </div>
+
+      </div><!-- end ui grid -->
+
+  </div><!-- end ui container -->
 
 </body>
 

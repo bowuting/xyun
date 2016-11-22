@@ -16,6 +16,7 @@
 <body>
 
 
+
 <div class="ui container">
 
     <br>
@@ -61,41 +62,49 @@
 </div>
 
     <div class="ui grid">
-        <div class="sixteenth wide column">
-          <h2>登录页面</h2>
-            <form class="" action="/xyun/my_shop/index.php/Login/Index/signinProcess" method="post">
-              <table class="ui table">
-                <tr>
-                  <td>
-                      手机号码：
-                  </td>
-                  <td>
-                    <div id="phone"  class="ui input">
 
-                        <input type="text" name="phone"   value="">
+      <div class="five wide column">
 
+      </div>
+        <div class="six wide column">
+
+          <div class="ui middle aligned center aligned grid" style="margin-top:50%;">
+            <div class="column">
+              <h2 class="ui teal  header">
+                <div class="content">
+                  请登录
+                </div>
+              </h2>
+              <form class="ui large form" action="/xyun/my_shop/index.php/Login/Index/signinProcess" method="post">
+                <div class="ui stacked segment">
+                  <div class="field">
+                    <div class="ui left icon input">
+                      <i class="user icon"></i>
+                      <input type="text" name="phone" placeholder="手机" data-rule="手机号码: required;" >
                     </div>
-                  </td>
-
-
-                <tr>
-                  <td>
-                    密码：
-                  </td>
-                  <td>
-                    <div id="" class="ui input">
-
-                        <input type="password" name="passwd"
-                        data-rule="密码: required; ">
+                  </div>
+                  <div class="field">
+                    <div class="ui left icon input">
+                      <i class="lock icon"></i>
+                      <input type="password" name="passwd" placeholder="密码" data-rule="密码: required;" >
                     </div>
-                  </td>
-                </tr>
+                  </div>
+                  <input id="submit" type="submit" class="ui fluid large teal submit button" name="" value="登录">
 
-              </table>
+                </div>
 
-                <input class="ui primary button" type="submit"  value="提交">
-            </form>
-            <p>还没有账号密码 <a href="/xyun/my_shop/index.php/Login/Index/registerFirst">点我立即注册</a></p>
+                <div class="ui error message"></div>
+
+              </form>
+
+              <div class="ui message">
+                <p>还没有账号密码? <a href="/xyun/my_shop/index.php/Login/Index/registerFirst">立即注册</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="five wide column">
+
         </div>
 
     </div>
@@ -116,53 +125,15 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
-    // layer.alert('<?php echo ($_POST['phone']); ?>');
+    $('#submit').click(function() {
 
 
-    function jump(wait){
-      window.setTimeout(function(){
-
-                if (wait == 0) {
-                    // $('#send_button').css("background","orangered");
-                    $('#send_button').text('发送短信验证码');
-                    $('#send_button').removeAttr('disabled','disabled');
-                    wait = 120;
-                } else {
-                    // $('#send_button').css("background","grey");
-                    $('#send_button').attr('disabled','disabled');
-                    $('#send_button').text('重新发送（'+wait+'）');
-                    wait--;
-                    jump(wait);
-                }
-
-            }, 1000);
-    }
-
-    $('#send_button').click(function(){
-      var phonenum="<?php echo ($_POST['phone']); ?>";
-
-      $.post("/xyun/my_shop/index.php/Login/Index/sendSms",{phonenum:phonenum},function(data,status){
-
-      //data的返回值就是php的返回值 是开发者决定
-      //status 的返回值 代表请求是否成功 success error
-
-      console.log(data);
-      console.log(status);
-
-      if (data == 1) {
-          layer.alert("发送成功,10分钟有效");
-          jump(60);
-      } else if (data == 2) {
-          layer.alert("黑名单,请联系管理员");
-      } else if (data == 3) {
-          layer.alert("今天超过5次");
-      } else if (data == 0) {
-          layer.alert("短信发送失败");
-      }
-
-  });
 
     });
+
+
+
+
 
 });
 
