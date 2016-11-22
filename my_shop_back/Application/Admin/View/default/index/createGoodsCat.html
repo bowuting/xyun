@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+
+    <title>添加商品分类</title>
+
+    <include file="./Public/AdminCommon/head.html" />
+
+  </head>
+  <body>
+      <form class="" action="__URL__/createGoodsCatAction" method="post">
+          <table class="table table-bordered">
+              <tr>
+                  <td>
+                      分类名称：
+                  </td>
+                  <td>
+                      <input type="text" name="name" id="name" value="">
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      上级分类：
+                  </td>
+                  <td>
+                      <select name="pid" >
+                          <option value="0">顶级分类</option>
+                          <volist name="list" id="vo">
+
+                              <!-- 如果是二级分类 则不能在二级分类下添加分类 -->
+                              <option value="{$vo.goodscat_id}"<if condition="$vo.lev eq 2">disabled="disabled"</if>>
+                                  <if condition="$vo.lev eq 1">
+                                      |--{$vo.goodscat_name}
+                                      <elseif condition="$vo.lev eq 2" />
+                                      &nbsp;&nbsp;&nbsp;&nbsp; |--{$vo.goodscat_name}
+                                  </if>
+                              </option>
+
+                          </volist>
+                      </select>
+                      <!-- <input type="text" name="lev" value=""> -->
+                  </td>
+              </tr>
+              <tr>
+                  <td>
+                      排序：
+                  </td>
+                  <td>
+                      <input type="text" name="sort" id="sort" value="">
+                  </td>
+              </tr>
+              <tr>
+                  <td colspan="2" class="text-center">
+                      <input  type="submit" class="btn btn-primary"  value="提交">
+                      <button type="button"  class="btn btn-primary create_action_btn" name="button">ajax提交</button>
+                  </td>
+              </tr>
+          </table>
+      </form>
+
+
+  </body>
+  <include file="./Public/AdminCommon/js.html" />
+
+  <script type="text/javascript">
+
+  $(document).ready(function(){
+
+    $(".create_action_btn").click(function(){
+    $.post("__URL__/createGoodsCatAction",
+      {
+        name:$("#name").val(),
+        sort:$("#sort").val(),
+        pid:$("select").val()
+      },
+      function (status) {
+        if (status == 1) {
+          layer.open({
+          content: '添加成功',
+          btn: ['好的'],
+          yes: function(){
+              window.location.reload()}
+          // cancel: function(){
+          //     //右上角关闭回调
+          //     window.location.reload()}
+            });
+        }
+      });
+      });
+
+    });  // ready(function(){ 结束
+
+
+  </script>
+
+
+</html>

@@ -1,0 +1,1 @@
+a:7:{i:0;s:9:"mycart_id";i:1;s:10:"mycart_uid";i:2;s:14:"mycart_goodsid";i:3;s:15:"mycart_quantity";i:4;s:17:"mycart_createtime";s:3:"_pk";s:9:"mycart_id";s:5:"_type";a:5:{s:9:"mycart_id";s:7:"int(11)";s:10:"mycart_uid";s:7:"int(11)";s:14:"mycart_goodsid";s:7:"int(11)";s:15:"mycart_quantity";s:7:"int(11)";s:17:"mycart_createtime";s:7:"int(11)";}}

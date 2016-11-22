@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head lang="cn">
+
+    <include file="./Public/HomeCommon/head.html" />
+
+</head>
+<body>
+
+
+<div class="ui container">
+
+    <include file="./Public/HomeCommon/nav.html" />
+    <div class="ui grid">
+        <div class="sixteenth wide column">
+          <h2>个人中心</h2>
+            <table class="ui celled table ">
+              <tr>
+                <td>
+                  用户id:
+                </td>
+                <td>
+                  用户手机：
+                </td>
+                <td>
+                  注册时间：
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  {$info.user_no}
+                </td>
+                <td>
+                  {$info.user_phone}
+                </td>
+                <td>
+                  {$info.user_createtime|date="Y-m-d  H:i:s",###}
+                </td>
+              </tr>
+            </table>
+            <h2>
+              我的收获地址
+            </h2>
+
+              <volist name="list" id="addr">
+                <p>
+                  {$addr.addr_name}
+                  {$addr.addr_pro}
+                  {$addr.addr_city}
+                  {$addr.addr_qu}
+                  {$addr.addr_address}
+                  {$addr.addr_phone}
+                </p>
+              </volist>
+
+
+            <form class="" class="ui form"action="__URL__/addaddress" method="post">
+              <table class="ui celled table">
+                <input type="hidden" name="uid" id="uid" value="{$info.user_id}">
+                <tr>
+                  <td>
+                    姓名 <input type="text" name="name" id="name" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    电话 <input type="text" name="phone" id="phone" value="">
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div data-toggle="distpicker">
+                      地址
+                        <select name="pro"></select>
+                        <select name="city"></select>
+                        <select name="qu"></select>
+                        <input type="text" name="addr" value="">
+                    </div>
+                  </td>
+                  <td>
+
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <!-- <input type="submit" name="name" value="添加地址"> -->
+                    <button type="button" id="addbtn">添加地址</button>
+                  </td>
+                </tr>
+              </table>
+            </form>
+
+            <h2>我的订单</h2>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+<include file="./Public/HomeCommon/js.html" />
+
+<script src="http://cdnsh.bowuting.com/cdn/city/js/distpicker.data.js"></script>
+<script src="http://cdnsh.bowuting.com/cdn/city/js/distpicker.js"></script>
+<script src="http://cdnsh.bowuting.com/cdn/city/js/main.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+      $('#addbtn').click(function(){
+        var uid = $('[name="uid"]').val();
+        var name = $('[name="name"]').val();
+        var phone = $('[name="phone"]').val();
+        var pro = $('[name="pro"]').val();
+        var city = $('[name="city"]').val();
+        var qu = $('[name="qu"]').val();
+        var addr = $('[name="addr"]').val();
+         $.post("__URL__/addaddress",
+          {
+          uid :uid,
+          name:name,
+          phone :phone,
+          pro:pro,
+          city:city,
+          qu:qu,
+          addr:addr,
+          },
+          function (data,status) {
+            if (data == 1) {
+              layer.open({
+              content: '添加成功',
+              btn: ['好的'],
+              yes: function(){
+                  window.location.reload()}
+              // cancel: function(){
+              //     //右上角关闭回调
+              //     window.location.reload()}
+                });
+            }
+          });
+
+
+
+
+      });
+
+
+    });
+
+
+
+</script>
+</html>
