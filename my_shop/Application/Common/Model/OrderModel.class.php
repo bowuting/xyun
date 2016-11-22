@@ -16,11 +16,11 @@ class OrderModel extends Model
     array("order_no",'getNo',1,"callback"),
     array('order_address','getAddress',1,'callback'),
     array("order_phone",'getPhone',1,"callback"),
-    // array("order_price",'getPrice',3,'callback'),
-    // array("order_ispay",'isPay',3,'callback'),
-    // array("order_payaccount",'getPayAccount',3,'callback'),
-    // array("order_paychannel",'getPayChannel',3,'callback'),
-    // array("order_paytime",'getPaytime',3,'callback'),
+    // array("order_price",'getPrice',2,'callback'),
+    array("order_ispay",'isPay',2,'callback'),
+    array("order_payaccount",'getPayAccount',2,'callback'),
+    array("order_paychannel",'getPayChannel',2,'callback'),
+    array("order_paytime",'getPaytime',2,'callback'),
   );
   public function getNo()
   {

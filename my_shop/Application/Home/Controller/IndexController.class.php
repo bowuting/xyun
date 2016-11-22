@@ -179,17 +179,20 @@ class IndexController extends Controller {
         } else {
             $result = $order->add();
             if ($result > 0) {
-                $this->success('新增成功','http://localhost/xyun/my_shop/index.php/Login/Index/me');
+                $this->success('提交成功','pay');
             } else {
                 $this->error('新增失败');
             }
         }
 
-      }else {
+      } else {
         $this->error('您还没有登录','http://localhost/xyun/my_shop/index.php/Login/Index/signin');
-      }
+        }
       }
 
+      public function pay(){
+        echo "<h2>支付页面</h2>";
+      }
 
       public function test(){
         dump($_SESSION);

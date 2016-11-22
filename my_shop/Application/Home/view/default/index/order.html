@@ -25,7 +25,7 @@
 
             <volist name="addrs" id='addrone'>
               <div>
-                <span data-addr-id="{$addrone.addr_id}" class="ppp" style="border:1px solid;width:200px">{$addrone.addr_name} {$addrone.addr_city}</span>
+                <span data-addr-id="{$addrone.addr_id}" data-click="0" class="ppp" style="border:1px solid;width:200px">{$addrone.addr_name} {$addrone.addr_city}</span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span> {$addrone.addr_phone}&nbsp;&nbsp; {$addrone.addr_pro}{$addrone.addr_city}{$addrone.addr_qu}{$addrone.addr_address}</span>
               </div>
@@ -60,7 +60,7 @@
               </table>
               <input type="hidden" name="price" value="{$price}">
               <span>总价：{$price/100}</span>
-              <input type="submit" name="" value="结算">
+              <input type="submit" name="" value="结算" id="submit" >
 
               </form>
 
@@ -77,16 +77,43 @@
 
 <include file="./Public/HomeCommon/js.html" />
 <script type="text/javascript">
+
+function contains(a, obj) {
+        for (var i = 0; i < a.length; i++) {
+            if (a[i] === obj) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
   $(document).ready(function(){
     $('.ppp').click(function() {
       // console.log('dadd');
         $('.ppp').css('background-color','white');
+        $('.ppp').attr('data-click','0')
       $(this).css('background-color','red');
+      $(this).attr('data-click','1')
       var val = $(this).attr('data-addr-id');
       console.log(val);
       $('#addrinput').val(val);
     });
 
+    $('#submit').click(function(){
+      var arr = new Array();
+      var i = 0;
+        $('.ppp').each(function() {
+          arr[i] = $(this).attr('data-click');
+           i++;
+        });
+        if (contains(arr,'1')) {
+
+        } else {
+          layer.alert('您还没有选择地址呢');
+          return false;
+        }
+    });
 
   });
 

@@ -75,7 +75,7 @@
 
 
             <?php if(is_array($addrs)): $i = 0; $__LIST__ = $addrs;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$addrone): $mod = ($i % 2 );++$i;?><div>
-                <span data-addr-id="<?php echo ($addrone["addr_id"]); ?>" class="ppp" style="border:1px solid;width:200px"><?php echo ($addrone["addr_name"]); ?> <?php echo ($addrone["addr_city"]); ?></span>
+                <span data-addr-id="<?php echo ($addrone["addr_id"]); ?>" data-click="0" class="ppp" style="border:1px solid;width:200px"><?php echo ($addrone["addr_name"]); ?> <?php echo ($addrone["addr_city"]); ?></span>
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <span> <?php echo ($addrone["addr_phone"]); ?>&nbsp;&nbsp; <?php echo ($addrone["addr_pro"]); echo ($addrone["addr_city"]); echo ($addrone["addr_qu"]); echo ($addrone["addr_address"]); ?></span>
               </div>
@@ -103,7 +103,7 @@
               </table>
               <input type="hidden" name="price" value="<?php echo ($price); ?>">
               <span>总价：<?php echo ($price/100); ?></span>
-              <input type="submit" name="" value="结算">
+              <input type="submit" name="" value="结算" id="submit" >
 
               </form>
 
@@ -128,16 +128,43 @@
 <script type="text/javascript" src="//cdnsh.bowuting.com/cdn/nice-validator/dist/local/zh-CN.js"></script>
 
 <script type="text/javascript">
+
+function contains(a, obj) {
+        for (var i = 0; i < a.length; i++) {
+            if (a[i] === obj) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
   $(document).ready(function(){
     $('.ppp').click(function() {
       // console.log('dadd');
         $('.ppp').css('background-color','white');
+        $('.ppp').attr('data-click','0')
       $(this).css('background-color','red');
+      $(this).attr('data-click','1')
       var val = $(this).attr('data-addr-id');
       console.log(val);
       $('#addrinput').val(val);
     });
 
+    $('#submit').click(function(){
+      var arr = new Array();
+      var i = 0;
+        $('.ppp').each(function() {
+          arr[i] = $(this).attr('data-click');
+           i++;
+        });
+        if (contains(arr,'1')) {
+
+        } else {
+          layer.alert('您还没有选择地址呢');
+          return false;
+        }
+    });
 
   });
 

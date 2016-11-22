@@ -183,6 +183,7 @@ $(document).ready(function(){
 
                   $('[data-quantity="'+ goodsid + '"]').text(quantity);
                   $('[data-subtotal="'+ goodsid + '"]').text(Subtotal);
+                  allPrice();
               } else {
                 layer.alert('添加失败');
               }
@@ -210,6 +211,7 @@ $(document).ready(function(){
 
                   $('[data-quantity="'+ goodsid + '"]').text(quantity);
                   $('[data-subtotal="'+ goodsid + '"]').text(Subtotal);
+                  allPrice();
               } else {
                 layer.alert('添加失败');
               }
@@ -226,15 +228,15 @@ $(document).ready(function(){
       $(".add").click(function(){
         var goodsid = $(this).attr('data-add');
         sub('add',goodsid);
-
         allPrice();
+
       });
 
       $(".reduce").click(function(){
         var goodsid = $(this).attr('data-reduce');
         sub('reduce',goodsid);
-
-       allPrice();
+        allPrice();
+      //  allPrice();
       });
 
 
