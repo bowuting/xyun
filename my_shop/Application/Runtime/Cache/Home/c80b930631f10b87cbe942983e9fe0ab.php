@@ -91,7 +91,7 @@
                 </tr>
               </thead>
 
-              <?php if(is_array($res)): $i = 0; $__LIST__ = $res;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><input type="hidden" name="gitstr" value="<?php echo ($str); ?>">
+              <?php if(is_array($res)): $i = 0; $__LIST__ = $res;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><input type="hidden" name="gidstr" value="<?php echo ($str); ?>">
               </tr>
                 <tr>
                   <td><?php echo ($vo["goods_name"]); ?></td>
@@ -101,7 +101,8 @@
 
                 </tr><?php endforeach; endif; else: echo "" ;endif; ?>
               </table>
-
+              <input type="hidden" name="price" value="<?php echo ($price); ?>">
+              <span>总价：<?php echo ($price/100); ?></span>
               <input type="submit" name="" value="结算">
 
               </form>

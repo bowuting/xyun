@@ -46,7 +46,7 @@
               <volist name="res" id='vo'>
 
 
-              <input type="hidden" name="gitstr" value="{$str}">
+              <input type="hidden" name="gidstr" value="{$str}">
               </tr>
                 <tr>
                   <td>{$vo.goods_name}</td>
@@ -58,7 +58,8 @@
 
                 </volist>
               </table>
-
+              <input type="hidden" name="price" value="{$price}">
+              <span>总价：{$price/100}</span>
               <input type="submit" name="" value="结算">
 
               </form>

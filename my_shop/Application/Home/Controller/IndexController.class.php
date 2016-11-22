@@ -139,6 +139,17 @@ class IndexController extends Controller {
         $str=implode('..',$gid);
         $this->assign('str',$str);
 
+        // echo sizeof($res);
+        for ($i=0; $i < sizeof($res); $i++) {
+          $price +=  $res[$i]['mycart_quantity'] * $res[$i]['goods_price'];
+          // echo $res[$i]['mycart_quantity'];
+          // echo $res[$i]['goods_price'];
+          // echo $price;
+        }
+        // dump($price);
+
+        $this->assign('price',$price);
+
         $this->display();
         // dump(I('post.'));
 
@@ -146,14 +157,37 @@ class IndexController extends Controller {
 
       public function orderProcess()
       {
-        $gidstr = I('post.gitstr');
-        $addr_id = I('post.addr_id');
         $uid = session('uid');
+        if(!empty($uid)){
+
+        $gidstr = I('post.gidstr');
+
+
+        $addr_id = I('post.addr_id');      // 收获地址id
+                    //用户id
         // $array=explode(separator,$string);
-        $arr = explode('..',$gidstr);
+        $arr = explode('..',$gidstr);   //goods id  数组形式
         dump($uid);
         dump($arr);
         dump($addr_id);
+
+        $order = D('Order');
+          echo $order->getNo();
+          // exit;
+        if (!$order->create($_POST,1)) {
+            $this->error($order->getError());
+        } else {
+            $result = $order->add();
+            if ($result > 0) {
+                $this->success('新增成功','http://localhost/xyun/my_shop/index.php/Login/Index/me');
+            } else {
+                $this->error('新增失败');
+            }
+        }
+
+      }else {
+        $this->error('您还没有登录','http://localhost/xyun/my_shop/index.php/Login/Index/signin');
+      }
       }
 
 
