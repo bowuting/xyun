@@ -197,10 +197,11 @@ class IndexController extends Controller {
       $uid  = $m->where($con)->getField('user_id');
       $form_passwd = md5($salt.$passwd);
       $db_passwd = $m->where($con)->getField('user_passwd');
+      $user_name = $m->where($con)->getField('user_name');
       if ($form_passwd === $db_passwd) {
         session('uid',$uid);
         // dump($_SESSION);
-        $this->success('欢迎回来!'.$uid,__APP__.'/Home/Index/gallery');
+        $this->success('欢迎回来!'.$user_name,__APP__.'/Home/Index/gallery');
         // $this->redirect("Home/Index/gallery");
       } else {
         $this->error('用户名或者密码错误');

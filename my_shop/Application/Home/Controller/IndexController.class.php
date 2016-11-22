@@ -110,7 +110,7 @@ class IndexController extends Controller {
     public function shopcart(){
       // echo __URL__;
       if (empty(session('uid'))) {
-        $this->error('您还没有登录','http://localhost/github/my_shop/index.php/Login/Index/signin');
+        $this->error('您还没有登录，正在在为您跳转至登录页面！',__APP__.'/Login/Index/signin');
       }
         $ShopcartModel = D('Shopcart');
         $uid = session('uid');

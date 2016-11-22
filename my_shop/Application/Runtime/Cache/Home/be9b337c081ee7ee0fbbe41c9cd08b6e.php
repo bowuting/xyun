@@ -20,37 +20,35 @@
 
     <br>
 <div class="ui menu">
-    <a class="item" href="/think/index.php/Home/">
+    <a class="item" href="/xyun/my_shop/index.php/Home/">
         首页
     </a>
-    <a class="item" href="/think/index.php/admin/">
+    <a class="item" href="/xyun/my_shop/index.php/admin/">
         后台
     </a>
-    <a class="item" href="/think/index.php/Home/Index/gallery">
+    <a class="item" href="/xyun/my_shop/index.php/Home/Index/gallery">
         商品列表
     </a>
     <?php
  if(empty($_SESSION['uid'])){ ?>
-        <a class="item" href="/think/index.php/Login/Index/registerFirst">
-            注册
-        </a>
-        <a class="item" href="/think/index.php/Login/Index/signin">
+      
+        <a class="item" href="/xyun/my_shop/index.php/Login/Index/signin">
             登录
         </a>
 
     <?php  } else { ?>
 
-      <a class="item" href="/think/index.php/Login/Index/signout">
+      <a class="item" href="/xyun/my_shop/index.php/Login/Index/signout">
           登出
       </a>
-      <a  class="item" href="/think/index.php/Login/Index/me">
+      <a  class="item" href="/xyun/my_shop/index.php/Login/Index/me">
           个人中心
       </a>
     <?php  } ?>
 
-    <a  class="item" href="/think/index.php/Home/Index/shopcart">我的购物车</a>
+    <a  class="item" href="/xyun/my_shop/index.php/Home/Index/shopcart">我的购物车</a>
 
-    <!-- <form class="item" action="/think/index.php/Home/Index/gallery" method="get">
+    <!-- <form class="item" action="/xyun/my_shop/index.php/Home/Index/gallery" method="get">
       <div class="ui input">
           <input id="search" type="text"  name="keyword" placeholder="Search...">
           <button id="searchbtn" type="submit" class="ui basic button">商品搜索</button>
@@ -69,16 +67,16 @@
             <table class="ui basic table">
               <thead>
                 <tr>
-                  <th> <a href="/think/index.php/Home/Index/gallery">全部分类</a></th>
+                  <th> <a href="/xyun/my_shop/index.php/Home/Index/gallery">全部分类</a></th>
                 </tr>
               </thead>
               <tbody>
                  <?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
                          <td>
 
-                             <?php if($vo["lev"] == 1): ?><a href="/think/index.php/Home/Index/gallery/cid/<?php echo ($vo["goodscat_id"]); ?>">|--<?php echo ($vo["goodscat_name"]); ?></a>
+                             <?php if($vo["lev"] == 1): ?><a href="/xyun/my_shop/index.php/Home/Index/gallery/cid/<?php echo ($vo["goodscat_id"]); ?>">|--<?php echo ($vo["goodscat_name"]); ?></a>
                                  <?php elseif($vo["lev"] == 2): ?>
-                                 &nbsp;&nbsp;&nbsp;&nbsp;  <a href="/think/index.php/Home/Index/gallery/cid/<?php echo ($vo["goodscat_id"]); ?>">|--<?php echo ($vo["goodscat_name"]); ?></a><?php endif; ?>
+                                 &nbsp;&nbsp;&nbsp;&nbsp;  <a href="/xyun/my_shop/index.php/Home/Index/gallery/cid/<?php echo ($vo["goodscat_id"]); ?>">|--<?php echo ($vo["goodscat_name"]); ?></a><?php endif; ?>
 
                          </td>
                       </tr><?php endforeach; endif; else: echo "" ;endif; ?>
@@ -115,7 +113,7 @@
             <div class="ui link cards">
 
                 <?php if(is_array($goodsList)): $i = 0; $__LIST__ = $goodsList;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$goodsvo): $mod = ($i % 2 );++$i;?><div class="card" >
-                      <a href="/think/index.php/Home/Index/goods/goods_id/<?php echo ($goodsvo["goods_id"]); ?>"><img width="260px" height="260px" src="<?php echo ($goodsvo["goods_pic"]); ?>" alt="" /></a>
+                      <a href="/xyun/my_shop/index.php/Home/Index/goods/goods_id/<?php echo ($goodsvo["goods_id"]); ?>"><img width="260px" height="260px" src="<?php echo ($goodsvo["goods_pic"]); ?>" alt="" /></a>
                       <div class="content">
                         <div class="header"><?php echo ($goodsvo["goods_name"]); ?></div>
                         <div class="description"><?php echo ($goodsvo["goods_desc"]); ?></div>
@@ -156,13 +154,13 @@
             var reg = new RegExp('/color/' + oldvalue);
             // alert(newvalue);
             if (newvalue == "all") {
-                location.href="/think/index.php/Home/Index/gallery".replace(reg,"");
+                location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"");
             } else {
                 if (oldvalue == "") {
-                    location.href="/think/index.php/Home/Index/gallery"+"/color/"+newvalue;
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery"+"/color/"+newvalue;
 
                 } else {
-                    location.href="/think/index.php/Home/Index/gallery".replace(reg,"/color/"+newvalue);
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"/color/"+newvalue);
                 }
             }
 
@@ -177,13 +175,13 @@
             var reg = new RegExp('/price/' + oldvalue);
             // alert(newvalue);
             if (newvalue == "all") {
-                location.href="/think/index.php/Home/Index/gallery".replace(reg,"");
+                location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"");
             } else {
                 if (oldvalue == "") {
-                    location.href="/think/index.php/Home/Index/gallery"+"/price/"+newvalue;
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery"+"/price/"+newvalue;
 
                 } else {
-                    location.href="/think/index.php/Home/Index/gallery".replace(reg,"/price/"+newvalue);
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"/price/"+newvalue);
                 }
             }
         });
@@ -196,9 +194,9 @@
             var reg = new RegExp('/price_2/' + oldvalue);
             // alert(newvalue);
                 if (oldvalue == "") {
-                    location.href="/think/index.php/Home/Index/gallery"+"/price_2/"+newvalue;
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery"+"/price_2/"+newvalue;
                 } else {
-                    location.href="/think/index.php/Home/Index/gallery".replace(reg,"/price_2/"+newvalue);
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"/price_2/"+newvalue);
                 }
         });
 
@@ -210,9 +208,9 @@
             var reg = new RegExp('/time/' + oldvalue);
             // alert(newvalue);
                 if (oldvalue == "") {
-                    location.href="/think/index.php/Home/Index/gallery"+"/time/"+newvalue;
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery"+"/time/"+newvalue;
                 } else {
-                    location.href="/think/index.php/Home/Index/gallery".replace(reg,"/time/"+newvalue);
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"/time/"+newvalue);
                 }
         });
 
@@ -222,9 +220,9 @@
           var oldvalue = "<?php echo ($_GET['keyword']); ?>";
           var reg = new RegExp('/keyword/' + oldvalue);
           if (oldvalue == "") {
-              location.href="/think/index.php/Home/Index/gallery"+"/keyword/"+newvalue;
+              location.href="/xyun/my_shop/index.php/Home/Index/gallery"+"/keyword/"+newvalue;
           } else {
-              location.href="/think/index.php/Home/Index/gallery".replace(reg,"/keyword/"+newvalue);
+              location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"/keyword/"+newvalue);
           }
         });
 

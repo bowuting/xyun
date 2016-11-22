@@ -18,9 +18,7 @@ body{ background: #fff; font-family: '微软雅黑'; color: #333; font-size: 16p
 <body>
 <div class="system-message">
 <?php if(isset($message)) {?>
-<h1>
-<img src="http://img.chifanbao.com/1.jpg" width="100px" style="vertical-align:middle">
-</h1>
+<h1>:)</h1>
 <p class="success"><?php echo($message); ?></p>
 <?php }else{?>
 <h1>:(</h1>

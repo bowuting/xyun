@@ -62,8 +62,7 @@
 
     <div class="ui grid">
         <div class="sixteenth wide column">
-          <h2>登录页面</h2>
-            <form class="" action="/xyun/my_shop/index.php/Login/Index/signinProcess" method="post">
+            <form class="" action="/xyun/my_shop/index.php/Login/Index/register" method="post">
               <table class="ui table">
                 <tr>
                   <td>
@@ -72,12 +71,36 @@
                   <td>
                     <div id="phone"  class="ui input">
 
-                        <input type="text" name="phone"   value="">
-
+                        <input type="text" name="phone"  disabled="disabled" value="<?php echo ($data["phone"]); ?>">
+                        <input type="hidden" name="phone_last" value="<?php echo ($data["phone"]); ?>">
                     </div>
                   </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="ui input">
+                      <button type="button" id="send_button">发送短信验证码</button>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="ui input">
+                        <input type="text" name="smscode" placeholder="验证码"
+                        data-rule="验证码: required; remote[post:/xyun/my_shop/index.php/Login/Index/ajaxCheckSmsVerity, smscode, phone];">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    用户名：
+                  </td>
+                  <td>
+                    <div id="" class="ui input">
 
-
+                        <input type="text" name="name"
+                        data-rule="用户名: required; ">
+                    </div>
+                  </td>
+                </tr>
                 <tr>
                   <td>
                     密码：
@@ -90,12 +113,21 @@
                     </div>
                   </td>
                 </tr>
-
+                <tr>
+                  <td>
+                      确认密码：
+                  </td>
+                  <td>
+                    <div id="" class="ui input">
+                        <input type="password" name="reppasswd"
+                        data-rule="确认密码: required; match[passwd];">
+                    </div>
+                  </td>
+                </tr>
               </table>
 
                 <input class="ui primary button" type="submit"  value="提交">
             </form>
-            <p>还没有账号密码 <a href="/xyun/my_shop/index.php/Login/Index/registerFirst">点我立即注册</a></p>
         </div>
 
     </div>

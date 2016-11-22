@@ -20,37 +20,35 @@
 
     <br>
 <div class="ui menu">
-    <a class="item" href="/think/index.php/Home/">
+    <a class="item" href="/xyun/my_shop/index.php/Home/">
         首页
     </a>
-    <a class="item" href="/think/index.php/admin/">
+    <a class="item" href="/xyun/my_shop/index.php/admin/">
         后台
     </a>
-    <a class="item" href="/think/index.php/Home/Index/gallery">
+    <a class="item" href="/xyun/my_shop/index.php/Home/Index/gallery">
         商品列表
     </a>
     <?php
  if(empty($_SESSION['uid'])){ ?>
-        <a class="item" href="/think/index.php/Login/Index/registerFirst">
-            注册
-        </a>
-        <a class="item" href="/think/index.php/Login/Index/signin">
+      
+        <a class="item" href="/xyun/my_shop/index.php/Login/Index/signin">
             登录
         </a>
 
     <?php  } else { ?>
 
-      <a class="item" href="/think/index.php/Login/Index/signout">
+      <a class="item" href="/xyun/my_shop/index.php/Login/Index/signout">
           登出
       </a>
-      <a  class="item" href="/think/index.php/Login/Index/me">
+      <a  class="item" href="/xyun/my_shop/index.php/Login/Index/me">
           个人中心
       </a>
     <?php  } ?>
 
-    <a  class="item" href="/think/index.php/Home/Index/shopcart">我的购物车</a>
+    <a  class="item" href="/xyun/my_shop/index.php/Home/Index/shopcart">我的购物车</a>
 
-    <!-- <form class="item" action="/think/index.php/Home/Index/gallery" method="get">
+    <!-- <form class="item" action="/xyun/my_shop/index.php/Home/Index/gallery" method="get">
       <div class="ui input">
           <input id="search" type="text"  name="keyword" placeholder="Search...">
           <button id="searchbtn" type="submit" class="ui basic button">商品搜索</button>
@@ -68,8 +66,9 @@
             <table class="ui celled table ">
               <tr>
                 <td>
-                  用户id:
+                  用户:
                 </td>
+
                 <td>
                   用户手机：
                 </td>
@@ -79,7 +78,7 @@
               </tr>
               <tr>
                 <td>
-                  <?php echo ($info["user_no"]); ?>
+                  <?php echo ($info["user_name"]); ?>
                 </td>
                 <td>
                   <?php echo ($info["user_phone"]); ?>
@@ -103,17 +102,20 @@
                 </p><?php endforeach; endif; else: echo "" ;endif; ?>
 
 
-            <form class="" class="ui form"action="/think/index.php/Login/Index/addaddress" method="post">
+            <form class="" class="ui form"action="/xyun/my_shop/index.php/Login/Index/addaddress" method="post">
               <table class="ui celled table">
                 <input type="hidden" name="uid" id="uid" value="<?php echo ($info["user_id"]); ?>">
                 <tr>
                   <td>
-                    姓名 <input type="text" name="name" id="name" value="">
+                    姓名 <input type="text" name="name" id="name" value=""
+                    data-rule="姓名: required; ">
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    电话 <input type="text" name="phone" id="phone" value="">
+                    手机 <input type="text" name="phone" id="phone" value=""
+                            data-rule-phone="[/^1[3-9]\d{9}$/, '请输入正确的手机号码']"
+                            data-rule="手机号码: required; phone;">
                   </td>
                 </tr>
                 <tr>
@@ -128,6 +130,14 @@
                   </td>
                   <td>
 
+
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="">
+                        邮编 <input type="text" name="postcode" value="">
+                    </div>
                   </td>
                 </tr>
                 <tr>
@@ -174,7 +184,7 @@
         var city = $('[name="city"]').val();
         var qu = $('[name="qu"]').val();
         var addr = $('[name="addr"]').val();
-         $.post("/think/index.php/Login/Index/addaddress",
+         $.post("/xyun/my_shop/index.php/Login/Index/addaddress",
           {
           uid :uid,
           name:name,

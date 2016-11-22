@@ -17,8 +17,9 @@
             <table class="ui celled table ">
               <tr>
                 <td>
-                  用户id:
+                  用户:
                 </td>
+
                 <td>
                   用户手机：
                 </td>
@@ -28,7 +29,7 @@
               </tr>
               <tr>
                 <td>
-                  {$info.user_no}
+                  {$info.user_name}
                 </td>
                 <td>
                   {$info.user_phone}
@@ -59,12 +60,15 @@
                 <input type="hidden" name="uid" id="uid" value="{$info.user_id}">
                 <tr>
                   <td>
-                    姓名 <input type="text" name="name" id="name" value="">
+                    姓名 <input type="text" name="name" id="name" value=""
+                    data-rule="姓名: required; ">
                   </td>
                 </tr>
                 <tr>
                   <td>
-                    电话 <input type="text" name="phone" id="phone" value="">
+                    手机 <input type="text" name="phone" id="phone" value=""
+                            data-rule-phone="[/^1[3-9]\d{9}$/, '请输入正确的手机号码']"
+                            data-rule="手机号码: required; phone;">
                   </td>
                 </tr>
                 <tr>
@@ -79,6 +83,14 @@
                   </td>
                   <td>
 
+
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <div class="">
+                        邮编 <input type="text" name="postcode" value="">
+                    </div>
                   </td>
                 </tr>
                 <tr>
