@@ -154,13 +154,13 @@
             var reg = new RegExp('/color/' + oldvalue);
             // alert(newvalue);
             if (newvalue == "all") {
-                location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"");
+                location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12".replace(reg,"");
             } else {
                 if (oldvalue == "") {
-                    location.href="/xyun/my_shop/index.php/Home/Index/gallery"+"/color/"+newvalue;
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12"+"/color/"+newvalue;
 
                 } else {
-                    location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"/color/"+newvalue);
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12".replace(reg,"/color/"+newvalue);
                 }
             }
 
@@ -175,13 +175,13 @@
             var reg = new RegExp('/price/' + oldvalue);
             // alert(newvalue);
             if (newvalue == "all") {
-                location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"");
+                location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12".replace(reg,"");
             } else {
                 if (oldvalue == "") {
-                    location.href="/xyun/my_shop/index.php/Home/Index/gallery"+"/price/"+newvalue;
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12"+"/price/"+newvalue;
 
                 } else {
-                    location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"/price/"+newvalue);
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12".replace(reg,"/price/"+newvalue);
                 }
             }
         });
@@ -194,9 +194,9 @@
             var reg = new RegExp('/price_2/' + oldvalue);
             // alert(newvalue);
                 if (oldvalue == "") {
-                    location.href="/xyun/my_shop/index.php/Home/Index/gallery"+"/price_2/"+newvalue;
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12"+"/price_2/"+newvalue;
                 } else {
-                    location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"/price_2/"+newvalue);
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12".replace(reg,"/price_2/"+newvalue);
                 }
         });
 
@@ -208,9 +208,9 @@
             var reg = new RegExp('/time/' + oldvalue);
             // alert(newvalue);
                 if (oldvalue == "") {
-                    location.href="/xyun/my_shop/index.php/Home/Index/gallery"+"/time/"+newvalue;
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12"+"/time/"+newvalue;
                 } else {
-                    location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"/time/"+newvalue);
+                    location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12".replace(reg,"/time/"+newvalue);
                 }
         });
 
@@ -220,9 +220,9 @@
           var oldvalue = "<?php echo ($_GET['keyword']); ?>";
           var reg = new RegExp('/keyword/' + oldvalue);
           if (oldvalue == "") {
-              location.href="/xyun/my_shop/index.php/Home/Index/gallery"+"/keyword/"+newvalue;
+              location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12"+"/keyword/"+newvalue;
           } else {
-              location.href="/xyun/my_shop/index.php/Home/Index/gallery".replace(reg,"/keyword/"+newvalue);
+              location.href="/xyun/my_shop/index.php/Home/Index/gallery/cid/12".replace(reg,"/keyword/"+newvalue);
           }
         });
 

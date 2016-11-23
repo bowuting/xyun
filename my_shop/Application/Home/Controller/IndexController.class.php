@@ -21,13 +21,15 @@ class IndexController extends Controller {
       $GoodsCatModel = D('GoodsCat');
       $result = $GoodsCatModel->getInfiniteGoodsCat();  //得到无限极分类
       $this->assign('list',$result);
-        $GoodsModel = D(Goods);
 
+      $GoodsModel = D(Goods);
       if ($cid == ""){
           $cid = $GoodsCatModel->getLastChildId($GoodsCatModel->getChildID('0'));  //如果没有cid则说明是取所有的  则得到所有的二级分类
+          // $cid 现在是所有二级分类的id的数组
       } else {
-          if ($GoodsCatModel->isHaveChild($cid)) {              //如果有cid  则看该cid有没有子类  如果有子类  则得到其所有子类（也就是二级分类）
+          if ($GoodsCatModel->isHaveChild($cid)) {     //如果有cid  则看该cid有没有子类  如果有子类  则得到其所有子类（也就是二级分类）
               $cid = $GoodsCatModel->getChildID($cid);
+          // $cid是某个一级分类的所有子类的id组成的数组
           }
       }
 
@@ -36,35 +38,6 @@ class IndexController extends Controller {
 
       $this->display();
 
-        exit;
-
-
-
-
-
-
-
-
-        // if (empty(I('get.'))) {
-            // $goodsList = $GoodsModel->getGoods(null,null,null,$color);
-        // } else {
-
-            if (I('get.cid') === '0') {
-              echo "string";
-              $cid = $GoodsCatModel->getLastChildId($cid);
-              // $goodsList = $GoodsModel->getAllGoods();
-            }
-            dump($cid);
-            // exit;
-            // echo $color;
-            $goodsList = $GoodsModel->getGoods(null,$cid,$keyword,$color,$price,$price_2,$time);
-            // dump($goodsList);
-        // }
-        // if (empty(I('get.'))) {
-        //   $goodsList = $GoodsModel->getAllGoods();
-        // }
-        $this->assign('goodsList',$goodsList);
-        $this->display();
     }
 
     public function goods(){
@@ -75,6 +48,7 @@ class IndexController extends Controller {
         // dump($result);
         $this->display();
     }
+
     public function addshopcart(){
 
         $goodsid = trim(I('param.goodsid'));
@@ -104,7 +78,6 @@ class IndexController extends Controller {
         } else {
           echo '0;';
         }
-
     }
 
     public function shopcart(){
@@ -215,11 +188,5 @@ class IndexController extends Controller {
       public function pay(){
         echo "<h2>支付页面</h2>";
       }
-
-      public function test(){
-        dump($_SESSION);
-        dump(json_decode(session('str'),true));
-      }
-
 
 }
