@@ -94,7 +94,7 @@ class SmsModel extends Model{
         $condition['sms_phone']=$phone;
 
         if($todayFirst === 1){
-            $con['sms_today_times']=$todayFirst;//今天第一次发
+            $con['sms_today_times']=$todayFirst;//今天第一次发  1
         }
 
         $con['sms_last_sendtime']=time();

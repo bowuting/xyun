@@ -5,34 +5,10 @@ use Think\Controller;
 
 class IndexController extends Controller {
 
+    //注册流程 第一步
     public function registerFirst(){
-        // self::verify();
-        // dump($_SESSION['verify_code']);
-
         $this->display();
     }
-    public function registerSecond(){
-        // echo "第二步";
-        $data = I('post.');
-        dump($data);
-        $this->assign('data',$data);
-        $this->display();
-
-    }
-    public function verify() {
-        $config = array(
-            'fontSize' => 22, // 验证码字体大小
-            'length' => 3, // 验证码位数
-            'imageH' => 0,
-            'imageW' => 0,
-            'useCurve' => false,
-            'useNoise' => false,
-        );
-        $Verify = new \Think\Verify($config);
-        $Verify->entry();
-    }
-
-
     public function ajaxIsThisPhoneRegistered(){
         // dump(I('post.'));
         $phone = I('post.phone');
@@ -46,7 +22,18 @@ class IndexController extends Controller {
              echo "已经被注册";
          }
     }
-
+    public function verify() {
+        $config = array(
+            'fontSize' => 22, // 验证码字体大小
+            'length' => 2, // 验证码位数
+            'imageH' => 0,
+            'imageW' => 0,
+            'useCurve' => false,
+            'useNoise' => false,
+        );
+        $Verify = new \Think\Verify($config);
+        $Verify->entry();
+    }
     public function ajaxCheckVerify(){
         $code = I('post.verify');
         $verify = new \Think\Verify();
@@ -58,20 +45,34 @@ class IndexController extends Controller {
             echo "验证码错误";
         }
     }
+    // 第一步完成
 
 
 
-    public function sendSms(){
-      $phonenum=trim(I('param.phonenum'));
-      $Sms = D('Sms');
-      $res1 = $Sms->isSms($phonenum);
+    public function registerSecond(){
 
+        $data = I('post.');
+        $this->assign('data',$data);
+        $this->display();
+
+    }
+    protected function getCode(){
       $code="";
       for($i=0;$i<4;$i++){
           $code .= rand(0,9);
       }
-      // echo $res;
-      // exit;
+      return $code;
+    }
+
+    public function sendSms(){
+
+      $phonenum = trim(I('param.phonenum'));
+      $code = self::getCode();
+
+      $Sms = D('Sms');
+      $res1 = $Sms->isSms($phonenum);
+
+
       if (!$res1) {
 
           // 没有注册过  短信数据库没有该手机号码
@@ -89,10 +90,9 @@ class IndexController extends Controller {
           if (!$res2) {    //如果不是黑名单
 
             $res3 = $Sms->isLastSendOnToday($phonenum);
-            // echo $res3;
-            //
-            if (!$res3) {                                         //不是今天发的  则将今天的发生次数置1
-                $res5 = $Sms->updatePhone($phonenum,$code,1);   //更新code和今天的次数 最后发送时间
+
+            if (!$res3) {                                         //不是今天发的
+                $res5 = $Sms->updatePhone($phonenum,$code,1);   //更新code 最后发送时间   今天次数置1
                 $res6 = $Sms->setIncTotalTimes($phonenum);      //更新总次数 + 1
                 // $result = sendSms($phonenum,$code);
                 if ($res5 && $res6) {
@@ -105,7 +105,7 @@ class IndexController extends Controller {
               if ($res4 < 5) {  //今天还没有超过5次
                   $res5 = $Sms->updatePhone($phonenum,$code,0);    //更新code和最后发送时间
                   $res6 = $Sms->setIncTotalTimes($phonenum);      //更新总次数 + 1
-                  $res7 = $Sms->setIncTodayTimes($phonenum);
+                  $res7 = $Sms->setIncTodayTimes($phonenum);      //更新今天次数 + 1
                   // $result = sendSms($phonenum,$code);
                     if ($res5 && $res6) {
                       echo "1";
@@ -124,29 +124,27 @@ class IndexController extends Controller {
     }
 
     public function ajaxCheckSmsVerity(){
-      $smscode=trim(I('param.smscode'));
-      $phone=trim(I('param.phone'));
-      // dump($smscode);
 
-      $Sms = D('Sms');
-      $res1 = $Sms->checkSms($phone,$smscode);
-      $res2 = $Sms->checkSms10Min($phone);
-      // echo $res1;
-      // echo $res2;
-      if ($res1 && $res2) {
-        echo "";
-      } else {
-        if ($res1 === 0) {
-          echo "验证码错误";
+        $smscode=trim(I('param.smscode'));
+        $phone=trim(I('param.phone'));
+
+        $Sms = D('Sms');
+        $res1 = $Sms->checkSms($phone,$smscode);
+        $res2 = $Sms->checkSms10Min($phone);
+
+        if ($res1 && $res2) {
+          echo "";
         } else {
-          echo "验证码已失效";
+          if ($res1 === 0) {
+            echo "验证码错误";
+          } else {
+            echo "验证码已失效";
+          }
         }
-      }
-
-
     }
 
     public function test(){
+      echo self::getCode();
       if (empty($_SESSION['uid'])) {
         echo "登录";
       } else {
@@ -164,10 +162,10 @@ class IndexController extends Controller {
             } else {
                 $result=$UserModel->add();
                 if($result>0){
-                    $this->success('注册成功',__APP__.'/Login/Index/signin');
+                    $this->success('注册成功，正在跳转登录页面',__APP__.'/Login/Index/signin');
                     exit;
                 }else{
-                    $this->error("注册失败");
+                    $this->error("注册失败 请稍后再试");
                     exit;
                 }
             }
