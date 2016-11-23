@@ -7,18 +7,16 @@
 </head>
 <body>
 
-
   <div class="ui container">
 
-      <include file="./Public/HomeCommon/nav.html" />
+    <include file="./Public/HomeCommon/nav.html" />
 
       <div class="ui grid">
+        <div class="five wide column">
 
-          <div class="five wide column">
+        </div>
 
-          </div>
           <div class="six wide column">
-
             <div class="ui middle aligned center aligned grid" style="margin-top:50%;">
               <div class="column">
                 <form class="ui large form" action="__URL__/registerSecond" method="post">
@@ -26,7 +24,7 @@
 
                     <div class="field">
                       <div class="ui left icon input">
-                        <!-- <i class="user icon"></i> -->
+                        <i class="phone icon"></i>
                         <input type="text" name="phone" placeholder="手机号码"
                         data-ok=''
                         data-rule-phone="[/^1[3-9]\d{9}$/, '请输入正确的手机号码']"

@@ -31,9 +31,11 @@ class GoodsModel extends Model{
     public function uploadPic(){
         if(!empty($_FILES['pic']['name'])){
             //上传到七牛
+
             $setting=C('UPLOAD_SITEIMG_QINIU');  //C函数 得到config文件的配置
             $Upload = new \Think\Upload($setting);
             $info = $Upload->upload($_FILES);
+            dump($Upload);
             echo $info['pic']['url'];
             return $info['pic']['url'];
         }else{
