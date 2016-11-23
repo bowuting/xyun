@@ -151,78 +151,64 @@ class IndexController extends Controller {
       //订单处理
       public function orderProcess()
       {
-        dump(I('post.'));
-        exit;
-        $uid = session('uid');
-        if(!empty($uid)){
+            $uid = session('uid');
 
-          // dump(I('post.'));
-          // exit;
+            if(empty($uid)){
+              $this->error('您还没有登录',__APP__.'/Login/Index/signin');
+            } else {
+                /*
+                这是接收到的post数据
+                'addr_name' => string ' 丁博武 ' (length=11)
+                'addr_phone' => string ' 18883284586' (length=12)
+                'addr_content' => string ' 陕西省西安市灞桥区国际港务区' (length=43)
+                'gidsStr' => string '8' (length=1)
+                'allPrice' => string '488800' (length=6)
+                */
 
-          // 订单总表
-          $order = D('Order');
-          $order->startTrans();
-          if (!$order->create($_POST,1)) {
-              $this->error($order->getError());
-          } else {
-              $orderid = $order->add();
-              // if ($orderid > 0) {
-              //   echo "nice";
-              //     //$this->success('提交成功','pay');
-              // } else {
-              //   echo "no";
-              //     // $this->error('新增失败');
-              // }
-          }
-          //
-          // exit;
+              $gidsStr = I('post.gidsStr');
+              $gidsArr = explode('..',$gidsStr);   //拆分字符串  成  数组形式   goods id  数组形式
 
-        $gidstr = I('post.gidsStr');
-        //
-        //
-        // $addr_id = I('post.addr_id');      // 收获地址id
-        //             //用户id
-        // $array=explode(separator,$string);
-        $gidsArr = explode('..',$gidstr);   //goods id  数组形式
-        // dump($uid);
-        // dump($gidsArr);
-        $shopcart = D('Shopcart');
-        $res = $shopcart->getShopcartFromUidAndGid($uid,$gidsArr);
-        dump($res);
-        foreach ($res as $k => $v) {
-          $data['orderdetail_orderid'] = $orderid;
-          $data['orderdetail_goodsid'] = $v['goods_id'];
-          $data['orderdetail_goodsname'] = $v['goods_name'];
-          $data['orderdetail_goodsprice'] = $v['goods_price'];
-          $data['orderdetail_quantity'] = $v['mycart_quantity'];
-          $data['orderdetail_goodsdesc'] = $v['goods_desc'];
-          $order_detail = M('order_detail');
-          $r2 = $order_detail->add($data);
-          if (!($r2 > 0)) {
-            $order_detail->rollback();
-          }
-        }
+              // 订单总表
+              $orderModel = D('Order');
+              $orderModel->startTrans();   //开启事务
+              if (!$orderModel->create($_POST,1)) {
+                  $this->error($orderModel->getError());
+              } else {
+                  $orderid = $orderModel->add();
+                  if (!($orderid > 0)) {
+                    $orderModel->rollback();
+                    $this->error('请稍后再试！');
+                  }
+              }
+
+            //  订单子表
+            $shopcart = D('Shopcart');
+            $res = $shopcart->getShopcartFromUidAndGid($uid,$gidsArr); // 连表查询得到购物车信息和商品信息
+            foreach ($res as $k => $v) {
+                $data['orderdetail_orderid'] = $orderid;
+                $data['orderdetail_goodsid'] = $v['goods_id'];
+                $data['orderdetail_goodsname'] = $v['goods_name'];
+                $data['orderdetail_goodsprice'] = $v['goods_price'];
+                $data['orderdetail_quantity'] = $v['mycart_quantity'];
+                $data['orderdetail_goodsdesc'] = $v['goods_desc'];
+                $order_detail = M('order_detail');
+                $r2 = $order_detail->add($data);
+                if (!($r2 > 0)) {
+                  $orderModel->rollback();
+                }
+            }
+
+            //  从购物车删除
+            $r3 = $shopcart->deleteShopcart($uid,$gidsArr);
 
 
-        $r3 = $shopcart->deleteShopcart($uid,$gidsArr);
-        if ($r3 > 0  AND $orderid > 0) {
-          $order->commit();
-          echo "删除成功";
-        } else {
-          $order->rollback();
-          echo "失败";
-        }
-
-        // exit;
-        // dump($addr_id);
-        exit;
-
-
-          // exit;
-
-
-      } else {
-        $this->error('您还没有登录','http://localhost/xyun/my_shop/index.php/Login/Index/signin');
+            if ($r3 > 0  AND $orderid > 0) {
+              $orderModel->commit();
+              $this->success('订单提交成功 正在跳转支付界面','pay',2);
+            } else {
+              $orderModel->rollback();
+              $this->success('订单提交失败 请稍后尝试');
+            }
         }
       }
 

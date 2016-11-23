@@ -128,16 +128,6 @@
 
 <script type="text/javascript">
 
-  function contains(arr, obj) {   //查看obj是否在arr中  是返回true 否则返回false
-          for (var i = 0; i < arr.length; i++) {
-              if (arr[i] === obj) {
-                  return true;
-              }
-          }
-          return false;
-      }
-
-
   $(document).ready(function(){       //选取地址
 
       $('.ppp').click(function() {
@@ -158,31 +148,18 @@
 
     });
 
-    $('#submit').click(function(){
+    $('#submit').click(function(){       //判断有没有选择收货地址
       var count = 0;
         $('.ppp').each(function() {
            count += parseInt($(this).attr('data-click'));
         });
-        console.log(count);
-        return false;
         if (count != 1) {
           layer.alert('您还没有选择收获地址呢');
-
           return false;
         }
     });
 
   });
-
-
-
-
-
-
-
-
-
-
 
 
 
