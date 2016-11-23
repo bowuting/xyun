@@ -78,5 +78,13 @@ class ShopcartModel extends Model
 
     }
 
+    public function deleteShopcart($uid,$gid){
+      $m = M('shopcart');
+      $con['mycart_uid'] = $uid;
+      $con['mycart_goodsid'] = array("in",$gid);
+
+      return $result=$m->where($con)->delete();
+    }
+
 
 }

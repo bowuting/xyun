@@ -74,11 +74,16 @@
 
             <?php if(is_array($addrs)): $i = 0; $__LIST__ = $addrs;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$addrone): $mod = ($i % 2 );++$i;?><div>
                 <span data-addr-id="<?php echo ($addrone["addr_id"]); ?>" data-click="0" class="ppp" style="border:1px solid;width:200px"><?php echo ($addrone["addr_name"]); ?> <?php echo ($addrone["addr_city"]); ?></span>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span> <?php echo ($addrone["addr_phone"]); ?>&nbsp;&nbsp; <?php echo ($addrone["addr_content"]); ?></span>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span> <?php echo ($addrone["addr_name"]); ?> </span>
+                <span> <?php echo ($addrone["addr_phone"]); ?></span>
+                <span> <?php echo ($addrone["addr_content"]); ?></span>
               </div>
               <br><?php endforeach; endif; else: echo "" ;endif; ?>
-            <input id="addrinput" type="hidden" name="addr_id" value="">
+            <input id="addrname" type="hidden" name="addr_name" value="">
+            <input id="addrphone" type="hidden" name="addr_phone" value="">
+            <input id="addrcontent" type="hidden" name="addr_content" value="">
+            <input  type="hidden" name="" value="">
             <table class="ui celled table">
               <thead>
                 <tr>
@@ -141,12 +146,19 @@ function contains(a, obj) {
     $('.ppp').click(function() {
       // console.log('dadd');
         $('.ppp').css('background-color','white');
-        $('.ppp').attr('data-click','0')
+        $('.ppp').attr('data-click','0');
       $(this).css('background-color','red');
       $(this).attr('data-click','1')
-      var val = $(this).attr('data-addr-id');
-      console.log(val);
-      $('#addrinput').val(val);
+      var name = $(this).next().text();
+      var phone = $(this).next().next().text();
+      var content = $(this).next().next().next().text();
+      console.log(name);
+      console.log(phone);
+      console.log(content);
+      $('#addrname').val(name);
+      $('#addrphone').val(phone);
+      $('#addrcontent').val(content);
+
     });
 
     $('#submit').click(function(){

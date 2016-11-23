@@ -160,30 +160,70 @@ class IndexController extends Controller {
         $uid = session('uid');
         if(!empty($uid)){
 
-        $gidstr = I('post.gidstr');
-
-
-        $addr_id = I('post.addr_id');      // 收获地址id
-                    //用户id
-        // $array=explode(separator,$string);
-        $arr = explode('..',$gidstr);   //goods id  数组形式
-        dump($uid);
-        dump($arr);
-        dump($addr_id);
-
-        $order = D('Order');
-          echo $order->getNo();
+          // dump(I('post.'));
           // exit;
-        if (!$order->create($_POST,1)) {
-            $this->error($order->getError());
-        } else {
-            $result = $order->add();
-            if ($result > 0) {
-                $this->success('提交成功','pay');
-            } else {
-                $this->error('新增失败');
-            }
+
+          // 订单总表
+          $order = D('Order');
+          $order->startTrans();
+          if (!$order->create($_POST,1)) {
+              $this->error($order->getError());
+          } else {
+              $orderid = $order->add();
+              // if ($orderid > 0) {
+              //   echo "nice";
+              //     //$this->success('提交成功','pay');
+              // } else {
+              //   echo "no";
+              //     // $this->error('新增失败');
+              // }
+          }
+          //
+          // exit;
+
+        $gidstr = I('post.gidstr');
+        //
+        //
+        // $addr_id = I('post.addr_id');      // 收获地址id
+        //             //用户id
+        // $array=explode(separator,$string);
+        $gidsArr = explode('..',$gidstr);   //goods id  数组形式
+        // dump($uid);
+        // dump($gidsArr);
+        $shopcart = D('Shopcart');
+        $res = $shopcart->getShopcartUidAndGid($uid,$gidsArr);
+        dump($res);
+        foreach ($res as $k => $v) {
+          $data['orderdetail_orderid'] = $orderid;
+          $data['orderdetail_goodsid'] = $v['goods_id'];
+          $data['orderdetail_goodsname'] = $v['goods_name'];
+          $data['orderdetail_goodsprice'] = $v['goods_price'];
+          $data['orderdetail_quantity'] = $v['mycart_quantity'];
+          $data['orderdetail_goodsdesc'] = $v['goods_desc'];
+          $order_detail = M('order_detail');
+          $r2 = $order_detail->add($data);
+          if (!($r2 > 0)) {
+            $order_detail->rollback();
+          }
         }
+
+
+        $r3 = $shopcart->deleteShopcart($uid,$gidsArr);
+        if ($r3 > 0  AND $orderid > 0) {
+          $order->commit();
+          echo "删除成功";
+        } else {
+          $order->rollback();
+          echo "失败";
+        }
+
+        // exit;
+        // dump($addr_id);
+        exit;
+
+
+          // exit;
+
 
       } else {
         $this->error('您还没有登录','http://localhost/xyun/my_shop/index.php/Login/Index/signin');
