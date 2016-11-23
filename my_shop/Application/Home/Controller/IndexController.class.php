@@ -122,6 +122,7 @@ class IndexController extends Controller {
 
       public function order(){
         dump(I('post.'));
+        exit;
         $gid = I('post.ch');
         $uid = session('uid');
         $shopcart = D('Shopcart');

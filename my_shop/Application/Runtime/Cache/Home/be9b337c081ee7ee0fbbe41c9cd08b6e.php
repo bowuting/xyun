@@ -2,7 +2,7 @@
 <html>
 <head lang="cn">
       <title>画廊</title>
-    <meta charset="UTF-8">
+      <meta charset="UTF-8">
 
 
 <link href="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet">

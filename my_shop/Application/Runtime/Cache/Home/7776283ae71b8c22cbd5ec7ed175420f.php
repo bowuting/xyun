@@ -62,79 +62,62 @@
 
     <div class="ui grid">
         <div class="sixteen wide column" >
-          <!-- <div ng-app="">
- 	          <p>名字 : <input type="text" ng-model="name"></p>
- 	          <h1>Hello {{name}}</h1>
-          </div> -->
+
           <form class="" action="/xyun/my_shop/index.php/Home/Index/order" method="post">
               <table class="ui celled table">
-                <thead>
+
+                  <thead>
+                    <tr>
+                      <th><input type="checkbox" class="checkbox-all" data-check="all"> 全选</th>
+                      <th>名称</th>
+                      <th>图片</th>
+                      <th>单价</th>
+                      <th>数量</th>
+                      <th>小计</th>
+                    </tr>
+                  </thead>
+
+                  <?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
+                      <td>
+                        <input type="checkbox" class="checkbox-one" data-check-one="<?php echo ($vo["goods_id"]); ?>" name="check[]" value="<?php echo ($vo["goods_id"]); ?>">
+                      </td>
+                      <td>
+                        <?php echo ($vo["goods_name"]); ?>
+                      </td>
+                      <td>
+                        <img width="50px" height="50px" src="<?php echo ($vo["goods_pic"]); ?>" alt="" />
+                      </td>
+                      <td>
+                        <p data-onePrice="<?php echo ($vo["goods_id"]); ?>" ><?php echo ($vo['goods_price']/100); ?></p>
+                      </td>
+                      <td>
+                        <button class="reduce" data-reduce="<?php echo ($vo["goods_id"]); ?>" type="button"  >-</button>
+                        <span data-quantity="<?php echo ($vo["goods_id"]); ?>" style="width:30px" > <?php echo ($vo['mycart_quantity']); ?> </span>
+                        <button class="add" data-add="<?php echo ($vo["goods_id"]); ?>" type="button"  >+</button>
+                      </td>
+                      <td>
+                        <p data-subtotal="<?php echo ($vo["goods_id"]); ?>" class="price"> <?php echo ($vo['goods_price']/100*$vo['mycart_quantity']); ?> </p>
+                      </td>
+                    </tr><?php endforeach; endif; else: echo "" ;endif; ?>
+
                   <tr>
-                    <th>
-                      <input type="checkbox" class="checkbox-all" data-check="all">  全选
-
-                    </th>
-                    <th>名称</th>
-                    <th>图片</th>
-                    <th>单价</th>
-                    <th>数量</th>
-                    <th>小计</th>
-
+                    <td colspan="6">
+                      <span style="float: right"> 总价：<span  id="all-price" >0</span>元
+                      </span>
+                    </td>
                   </tr>
-                </thead>
 
-                <?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
-                    <td>
-                        <input type="checkbox" data-check="<?php echo ($vo["goods_id"]); ?>" class="checkbox n_check" name="ch[]" value="<?php echo ($vo["goods_id"]); ?>">
+                  <tr>
+                    <td colspan="6">
+                      <span style="float: right">
+                        <input id="submit" type="submit"  value="结算submit">
+                      </span>
                     </td>
-                    <!-- <input type="hidden" name="goods_id" value="<?php echo ($vo["goods_id"]); ?>"> -->
-                    <td>
-                      <?php echo ($vo["goods_name"]); ?>
-                    </td>
-                    <td>
-                      <img width="50px" height="50px"src="<?php echo ($vo["goods_pic"]); ?>" alt="" />
-                    </td>
-                    <td>
-                      <p data-onePrice="<?php echo ($vo["goods_id"]); ?>" >
-                        <!-- <input type="hidden" name="goods_price" value="<?php echo ($vo['goods_price']); ?>"> -->
-                        <?php echo ($vo['goods_price']/100); ?>
-                      </p>
-                    </td>
-                    <td>
-                      <button class="reduce" data-reduce="<?php echo ($vo["goods_id"]); ?>" type="button"  >-</button>
+                  </tr>
 
-                      <span data-quantity="<?php echo ($vo["goods_id"]); ?>" style="width:30px" type="text" name="num"  > <?php echo ($vo['mycart_quantity']); ?> </span>
-                      <button class="add" data-add="<?php echo ($vo["goods_id"]); ?>" type="button"  >+</button>
-
-                    </td>
-                    <td>
-
-                      <p data-subtotal="<?php echo ($vo["goods_id"]); ?>" class="price">
-
-                        <?php echo ($vo['goods_price']/100*$vo['mycart_quantity']); ?>
-                      </p>
-                    </td>
-                  </tr><?php endforeach; endif; else: echo "" ;endif; ?>
-                <tr>
-                  <td colspan="6">
-                    <span style="float: right">
-                      总价：<span  id="all-price" >0</span>元
-                    </span>
-                  </td>
-                </tr>
-                <tr>
-                  <td colspan="6">
-                    <span style="float: right">
-                      <input id="submit" type="submit"  value="结算submit">
-                      <!-- <button type="button" class="orderbtn" name="button">结算</button> -->
-                    </span>
-                  </td>
-                </tr>
               </table>
 
           </form>
-
-          <!-- <button type="button" class="" name="button">结算</button> -->
 
         </div>
     </div>
@@ -155,211 +138,51 @@
 <script type="text/javascript">
 $(document).ready(function(){
 
-
-    function sub(con,goodsid){
-        // console.log(con);
-        // console.log('data-' + con);
-
-        console.log(goodsid);
-        var onePrice =  parseInt($('[data-onePrice="'+ goodsid + '"]').text());
-        var quantity = parseInt($('[data-quantity="'+ goodsid + '"]').text());
-        var Subtotal = 0;
-
-        if (con == 'add') {
-
-
-          $.post("/xyun/my_shop/index.php/Home/Index/addshopcart",
-            {
-              goodsid:goodsid,
-              num:quantity + 1,
-            },
-            function (data,status) {
-
-              if (data == 1) {
-                  quantity += 1;
-                  Subtotal = quantity * onePrice;
-
-                  $('[data-quantity="'+ goodsid + '"]').text(quantity);
-                  $('[data-subtotal="'+ goodsid + '"]').text(Subtotal);
-                  allPrice();
-              } else {
-                layer.alert('稍后再试~');
-              }
-            });
-
-
-
-        } else {
-          if (quantity <= 1) {
-            layer.alert('不能再减了~');
-            return false;
-          }
-
-
-          $.post("/xyun/my_shop/index.php/Home/Index/addshopcart",
-            {
-              goodsid:goodsid,
-              num:quantity - 1,
-            },
-            function (data,status) {
-
-              if (data == 1) {
-                quantity -= 1;
-                Subtotal = quantity * onePrice;
-
-                  $('[data-quantity="'+ goodsid + '"]').text(quantity);
-                  $('[data-subtotal="'+ goodsid + '"]').text(Subtotal);
-                  allPrice();
-              } else {
-                layer.alert('添加失败');
-              }
-            });
-
-        }
-        // Subtotal = quantity * onePrice;
-        //         $('[data-quantity="'+ goodsid + '"]').text(quantity);
-        //         $('[data-subtotal="'+ goodsid + '"]').text(Subtotal);
-
-    }
-
-
-      $(".add").click(function(){
-        var goodsid = $(this).attr('data-add');
-        sub('add',goodsid);
-        allPrice();
+      $(".add").click(function(){    //点击加按钮
+          var goodsid = $(this).attr('data-add');
+          sub('add',goodsid);
+          getAllPrice();
 
       });
 
-      $(".reduce").click(function(){
-        var goodsid = $(this).attr('data-reduce');
-        sub('reduce',goodsid);
-        allPrice();
-      //  allPrice();
+      $(".reduce").click(function(){  //点击减少按钮
+          var goodsid = $(this).attr('data-reduce');
+          sub('reduce',goodsid);
+          getAllPrice();
+
       });
 
 
-      function allPrice() {
+      $(".checkbox-all").click(function(){   //点击全选按钮
 
-        var allPrice = 0;
-
-        $(".checkbox").each(function () {
-          // if ($(this).is(':checked')) {
-          //   console.log($(this).attr('data-check'));
-          // }
-          // return false;
           if($(this).is(':checked')){
-
-              var goodsid = $(this).attr('data-check');
-              var subtotalPrice =  parseInt($('[data-subtotal="'+ goodsid + '"]').text());
-
-              allPrice += subtotalPrice;
-
-            }
-
-          });
-
-          $('#all-price').text(allPrice);
-      }
-
-      $(".checkbox-all").click(function(){
-        if($(this).is(':checked')){
-
-              var isAll = $(this).is(":checked");
-
-              if(isAll){
-               //选择了
-               $(".n_check").prop("checked", true);
-           }
-          //  else{
-          //      $(".n_check").prop("checked", false);
-          //  }
-
-              // if (isAll == 'all') {
-              //   console.log('dad');
-              //   // location.reload();
-              //
-              //   $('.n_check').attr("checked",'checked');
-              //
-              //   // console.log(isAll);
-              // }
-
-            }
-            allPrice();
+              $(".checkbox-one").prop("checked", true);
+          } else {
+              $(".checkbox-one").prop("checked", false);
+          }
+          getAllPrice();
 
         });
 
+        $(".checkbox-one").click(function(){     //点击单个物品单选时候  判断是否全部选中  如果有其中一个没有选中   则将全部选中的取消
 
+              var oneCheckIfAllTrue = false;
+              $(".checkbox-one").each(function () {
+                  oneCheckIfAllTrue =  $(this).is(':checked') && oneCheckIfAllTrue;
+              });
 
-        $(".checkbox").click(function(){
-
-             allPrice();
+              if (!oneCheckIfAllTrue) {
+                $('.checkbox-all').prop("checked", false);
+              }
+              getAllPrice();
 
           });
 
 
-          // $('.orderbtn').click(function(){
-          //   var arr = new Array();  ;
-          //   var  i = 0;
-          //    $(".checkbox").each(function () {
-          //      if($(this).is(':checked')){
-          //          var goodsid = $(this).attr('data-check');
-          //          arr[i] = goodsid;
-          //          i += 1;
-          //        }
-          //   });
-          //
-          //
-          //   var str = JSON.stringify(arr);
-          //
-          //   // console.log(str);
-          //   // console.log(goodsid);
-          //
-          //
-          //
-          //            $.post("/xyun/my_shop/index.php/Home/Index/order",
-          //              {
-          //                goodsids:str,
-          //              },
-          //             //  dataType:"json",
-          //             //  contentType:"application/json",
-          //              function (data,status) {
-          //
-          //                console.log(data);
-          //                return false;
-          //
-          //                 if (data == 1) {
-          //                   layer.open({                              // 更新  打开弹窗
-          //                     type: 2,
-          //                     skin: 'layui-layer-rim',
-          //                     title:'结算',
-          //                     area: ['1200px', '900px'],
-          //                     // shadeClose: true, //点击遮罩关闭
-          //                      content: '/xyun/my_shop/index.php/Home/Index/orderProcess',
-          //                     closeBtn: 2,
-          //                   shift: 0,
-          //                   maxmin: true,
-          //                   moveType: 0,
-          //                     //content: '/xyun/my_shop/index.php/Admin/index/createGoodsCat',
-          //                   cancel:function() {
-          //                       location.reload();
-          //                     }
-          //                   });
-          //                 }
-          //
-          //
-          //              });
-          //
-          //
-          //
-          //
-          //
-          // });
-
-
-          $('#submit').click(function() {
+          $('#submit').click(function() {    //点击提交按钮
 
             var isCheck = false;
-            $(".checkbox").each(function () {
+            $(".checkbox-one").each(function () {
                 isCheck =  $(this).is(':checked') || isCheck;
             });
 
@@ -368,6 +191,87 @@ $(document).ready(function(){
               return false;
             }
           });
+
+
+
+          function getAllPrice() {   //计算总价并更新总价
+
+            var allPrice = 0;
+
+            $(".checkbox-one").each(function() {
+
+              if($(this).is(':checked')){
+
+                  var goodsid = $(this).attr('data-check-one');    //得到点击了的id
+                  var subtotalPrice =  parseInt($('[data-subtotal="'+ goodsid + '"]').text());
+
+                  allPrice += subtotalPrice;
+                }
+              });
+              console.log(allPrice);
+
+              $('#all-price').text(allPrice);
+          }
+
+
+
+            function sub(con,goodsid){     //单个物品加减 计算单个物品总价并更新  还有ajax请求 更新数据库
+
+                var onePrice =  parseInt($('[data-onePrice="'+ goodsid + '"]').text());
+                var quantity = parseInt($('[data-quantity="'+ goodsid + '"]').text());
+                var subtotal = 0;
+
+                if (con == 'add') {
+                        //点击增加按钮
+                        $.post("/xyun/my_shop/index.php/Home/Index/addshopcart",
+                          {
+                            goodsid:goodsid,
+                            num:quantity + 1,
+                          },
+                          function (data,status) {
+
+                            if (data == 1) {
+                                quantity += 1;
+                                subtotal = quantity * onePrice;
+
+                                $('[data-quantity="'+ goodsid + '"]').text(quantity);
+                                $('[data-subtotal="'+ goodsid + '"]').text(subtotal);
+                                getAllPrice();
+                            } else {
+                              layer.alert('稍后再试~');
+                            }
+                          });
+
+                } else {
+                      //点击减少按钮
+                      if (quantity <= 1) {
+                        layer.alert('不能再减了~');
+                        return false;
+                      }
+
+                      $.post("/xyun/my_shop/index.php/Home/Index/addshopcart",
+                        {
+                          goodsid:goodsid,
+                          num:quantity - 1,
+                        },
+                        function (data,status) {
+
+                          if (data == 1) {
+                            quantity -= 1;
+                            subtotal = quantity * onePrice;
+
+                              $('[data-quantity="'+ goodsid + '"]').text(quantity);
+                              $('[data-subtotal="'+ goodsid + '"]').text(subtotal);
+                              getAllPrice();
+                          } else {
+                            layer.alert('添加失败');
+                          }
+                        });
+                      }
+              }
+
+
+
     });
 
 </script>
