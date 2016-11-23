@@ -120,44 +120,39 @@ class IndexController extends Controller {
         $this->display();
       }
 
-      public function order(){
-        dump(I('post.'));
-        exit;
-        $gid = I('post.ch');
-        $uid = session('uid');
-        $shopcart = D('Shopcart');
-        $res = $shopcart->getShopcartUidAndGid($uid,$gid);
-        // dump($res);
-        // dump($uid);
-        // dump($gid);
-        $this->assign('res',$res);
 
-        $addr =  M('addr');
+      //订单显示页面 通过uid、gid得到订单各个信息 展示到页面
+      public function order(){
+
+        $gids = I('post.check');                         //得到一个商品id的数组
+        $uid = session('uid');
+
+        $shopcartModel = D('Shopcart');                  //得到连表查询之后的 商品信息和购物车信息
+        $shopcartRes = $shopcartModel->getShopcartFromUidAndGid($uid,$gids);
+        $this->assign('res',$shopcartRes);
+
+        for ($i=0; $i < sizeof($shopcartRes); $i++) {    //将购物车的物品个数信息和商品信息  得到  总价格
+          $allPrice +=  $shopcartRes[$i]['mycart_quantity'] * $shopcartRes[$i]['goods_price'];
+        }
+        $this->assign('allPrice',$allPrice);
+
+        $gidsStr = implode('..',$gids);                  // 将gids（数组）转为以 .. 分割开来的字符串
+        $this->assign('gidsStr',$gidsStr);
+
+        $addrDB =  M('addr');                             //根据uid查的此人的收货地址信息
         $con['addr_uid'] = $uid;
-        $addrs = $addr->where($con)->select();
+        $addrs = $addrDB->where($con)->select();
         $this->assign('addrs',$addrs);
 
-        $str=implode('..',$gid);
-        $this->assign('str',$str);
-
-        // echo sizeof($res);
-        for ($i=0; $i < sizeof($res); $i++) {
-          $price +=  $res[$i]['mycart_quantity'] * $res[$i]['goods_price'];
-          // echo $res[$i]['mycart_quantity'];
-          // echo $res[$i]['goods_price'];
-          // echo $price;
-        }
-        // dump($price);
-
-        $this->assign('price',$price);
-
         $this->display();
-        // dump(I('post.'));
-
       }
 
+
+      //订单处理
       public function orderProcess()
       {
+        dump(I('post.'));
+        exit;
         $uid = session('uid');
         if(!empty($uid)){
 
@@ -182,7 +177,7 @@ class IndexController extends Controller {
           //
           // exit;
 
-        $gidstr = I('post.gidstr');
+        $gidstr = I('post.gidsStr');
         //
         //
         // $addr_id = I('post.addr_id');      // 收获地址id
@@ -192,7 +187,7 @@ class IndexController extends Controller {
         // dump($uid);
         // dump($gidsArr);
         $shopcart = D('Shopcart');
-        $res = $shopcart->getShopcartUidAndGid($uid,$gidsArr);
+        $res = $shopcart->getShopcartFromUidAndGid($uid,$gidsArr);
         dump($res);
         foreach ($res as $k => $v) {
           $data['orderdetail_orderid'] = $orderid;

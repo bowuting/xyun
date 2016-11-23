@@ -51,7 +51,7 @@ class ShopcartModel extends Model
 
     }
 
-    public function getShopcartUidAndGid($uid,$gid){
+    public function getShopcartFromUidAndGid($uid,$gid){
       $m = M('shopcart');
       $con['mycart_uid'] = $uid;
       if (is_array($gid)) {

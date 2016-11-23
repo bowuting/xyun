@@ -19,7 +19,7 @@
 
                   <thead>
                     <tr>
-                      <th><input type="checkbox" class="checkbox-all" data-check="all"> 全选</th>
+                      <th><input type="checkbox" class="checkbox-all" > 全选</th>
                       <th>名称</th>
                       <th>图片</th>
                       <th>单价</th>
@@ -32,6 +32,7 @@
                     <tr>
                       <td>
                         <input type="checkbox" class="checkbox-one" data-check-one="{$vo.goods_id}" name="check[]" value="{$vo.goods_id}">
+                        <!-- 这里需要传一个数组过去 -->
                       </td>
                       <td>
                         {$vo.goods_name}

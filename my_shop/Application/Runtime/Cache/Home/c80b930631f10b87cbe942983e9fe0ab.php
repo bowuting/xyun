@@ -13,10 +13,10 @@
 
     <title>订单结算页</title>
 </head>
+
 <body>
 
-
-<div class="ui container">
+  <div class="ui container">
     <br>
 <div class="ui menu">
     <a class="item" href="/xyun/my_shop/index.php/Home/">
@@ -60,64 +60,59 @@
 </div>
 
 
-
-
-
     <div class="ui grid">
-        <div class="sixteen wide column">
 
+        <div class="sixteen wide column">
 
           <h2>订单结算页</h2>
 
           <form class="" action="/xyun/my_shop/index.php/Home/Index/orderProcess" method="post">
 
 
-            <?php if(is_array($addrs)): $i = 0; $__LIST__ = $addrs;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$addrone): $mod = ($i % 2 );++$i;?><div>
-                <span data-addr-id="<?php echo ($addrone["addr_id"]); ?>" data-click="0" class="ppp" style="border:1px solid;width:200px"><?php echo ($addrone["addr_name"]); ?> <?php echo ($addrone["addr_city"]); ?></span>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <span> <?php echo ($addrone["addr_name"]); ?> </span>
-                <span> <?php echo ($addrone["addr_phone"]); ?></span>
-                <span> <?php echo ($addrone["addr_content"]); ?></span>
-              </div>
-              <br><?php endforeach; endif; else: echo "" ;endif; ?>
-            <input id="addrname" type="hidden" name="addr_name" value="">
-            <input id="addrphone" type="hidden" name="addr_phone" value="">
-            <input id="addrcontent" type="hidden" name="addr_content" value="">
-            <input  type="hidden" name="" value="">
-            <table class="ui celled table">
-              <thead>
-                <tr>
-                  <th>名称</th>
-                  <th>图片</th>
-                  <th>单价</th>
-                  <th>数量</th>
-                </tr>
-              </thead>
+              <?php if(is_array($addrs)): $i = 0; $__LIST__ = $addrs;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$addrone): $mod = ($i % 2 );++$i;?><div>
+                  <span data-addr-id="<?php echo ($addrone["addr_id"]); ?>" data-click="0" class="ppp" style="border:1px solid;width:200px"><?php echo ($addrone["addr_name"]); ?> <?php echo ($addrone["addr_city"]); ?></span>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <span> <?php echo ($addrone["addr_name"]); ?> </span>
+                  <span> <?php echo ($addrone["addr_phone"]); ?></span>
+                  <span> <?php echo ($addrone["addr_content"]); ?></span>
+                </div><?php endforeach; endif; else: echo "" ;endif; ?>
 
-              <?php if(is_array($res)): $i = 0; $__LIST__ = $res;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><input type="hidden" name="gidstr" value="<?php echo ($str); ?>">
-              </tr>
-                <tr>
-                  <td><?php echo ($vo["goods_name"]); ?></td>
-                  <td><img width="50px" height="50px"src="<?php echo ($vo["goods_pic"]); ?>" alt="" /></td>
-                    <td><?php echo ($vo[goods_price]/100); ?></td>
-                  <td><?php echo ($vo["mycart_quantity"]); ?></td>
+              <input id="addrname" type="hidden" name="addr_name" value="">
+              <input id="addrphone" type="hidden" name="addr_phone" value="">
+              <input id="addrcontent" type="hidden" name="addr_content" value="">
 
-                </tr><?php endforeach; endif; else: echo "" ;endif; ?>
+              <table class="ui celled table">
+
+                <thead>
+                  <tr>
+                    <th>名称</th>
+                    <th>图片</th>
+                    <th>单价</th>
+                    <th>数量</th>
+                  </tr>
+                </thead>
+
+                <?php if(is_array($res)): $i = 0; $__LIST__ = $res;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><input type="hidden" name="gidsStr" value="<?php echo ($gidsStr); ?>">
+                  <tr>
+                      <td><?php echo ($vo["goods_name"]); ?></td>
+                      <td><img width="50px" height="50px"src="<?php echo ($vo["goods_pic"]); ?>" alt="" /></td>
+                      <td><?php echo ($vo[goods_price]/100); ?></td>
+                      <td><?php echo ($vo["mycart_quantity"]); ?></td>
+                  </tr><?php endforeach; endif; else: echo "" ;endif; ?>
+
               </table>
-              <input type="hidden" name="price" value="<?php echo ($price); ?>">
-              <span>总价：<?php echo ($price/100); ?></span>
-              <input type="submit" name="" value="结算" id="submit" >
 
-              </form>
+              <input type="hidden" name="allPrice" value="<?php echo ($allPrice); ?>">
+              <span>总价：<?php echo ($allPrice/100); ?></span>
+              <input type="submit" id="submit" value="结算"  >
 
+          </form>
 
+        </div>  <!--end sixteen wide column -->
 
-        </div>
+    </div>  <!--end ui grid -->
 
-
-    </div>
-
-</div>
+  </div> <!--end ui container -->
 
 </body>
 
@@ -130,31 +125,33 @@
 <script type="text/javascript" src="//cdnsh.bowuting.com/cdn/nice-validator/dist/jquery.validator.js"></script>
 <script type="text/javascript" src="//cdnsh.bowuting.com/cdn/nice-validator/dist/local/zh-CN.js"></script>
 
+
 <script type="text/javascript">
 
-function contains(a, obj) {
-        for (var i = 0; i < a.length; i++) {
-            if (a[i] === obj) {
-                return true;
-            }
-        }
-        return false;
-    }
+  function contains(arr, obj) {   //查看obj是否在arr中  是返回true 否则返回false
+          for (var i = 0; i < arr.length; i++) {
+              if (arr[i] === obj) {
+                  return true;
+              }
+          }
+          return false;
+      }
 
 
-  $(document).ready(function(){
-    $('.ppp').click(function() {
-      // console.log('dadd');
-        $('.ppp').css('background-color','white');
-        $('.ppp').attr('data-click','0');
+  $(document).ready(function(){       //选取地址
+
+      $('.ppp').click(function() {
+
+      $('.ppp').css('background-color','white');
+      $('.ppp').attr('data-click','0');
+
       $(this).css('background-color','red');
       $(this).attr('data-click','1')
-      var name = $(this).next().text();
-      var phone = $(this).next().next().text();
+
+      var name    = $(this).next().text();
+      var phone   = $(this).next().next().text();
       var content = $(this).next().next().next().text();
-      console.log(name);
-      console.log(phone);
-      console.log(content);
+
       $('#addrname').val(name);
       $('#addrphone').val(phone);
       $('#addrcontent').val(content);
@@ -162,17 +159,13 @@ function contains(a, obj) {
     });
 
     $('#submit').click(function(){
-      var arr = new Array();
-      var i = 0;
+      var count = 0;
         $('.ppp').each(function() {
-          arr[i] = $(this).attr('data-click');
-           i++;
+           count += parseInt($(this).attr('data-click'));
         });
-        if (contains(arr,'1')) {
-
-        } else {
-
-
+        console.log(count);
+        return false;
+        if (count != 1) {
           layer.alert('您还没有选择收获地址呢');
 
           return false;

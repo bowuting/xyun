@@ -6,7 +6,7 @@ class OrderModel extends Model
 
   protected $_map = array(
       //左边的是表单字段 =>右边是数据库字段
-      'price' => 'order_totalprice',
+      'allPrice' => 'order_totalprice',
       'addr_name' => 'order_address_name',
       'addr_phone' => 'order_address_phone',
       'addr_content' => 'order_address_content',

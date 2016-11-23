@@ -68,7 +68,7 @@
 
                   <thead>
                     <tr>
-                      <th><input type="checkbox" class="checkbox-all" data-check="all"> 全选</th>
+                      <th><input type="checkbox" class="checkbox-all" > 全选</th>
                       <th>名称</th>
                       <th>图片</th>
                       <th>单价</th>
@@ -80,6 +80,7 @@
                   <?php if(is_array($list)): $i = 0; $__LIST__ = $list;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?><tr>
                       <td>
                         <input type="checkbox" class="checkbox-one" data-check-one="<?php echo ($vo["goods_id"]); ?>" name="check[]" value="<?php echo ($vo["goods_id"]); ?>">
+                        <!-- 这里需要传一个数组过去 -->
                       </td>
                       <td>
                         <?php echo ($vo["goods_name"]); ?>
