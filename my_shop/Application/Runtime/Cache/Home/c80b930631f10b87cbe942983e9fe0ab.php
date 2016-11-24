@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
 
 
-<link href="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet">
+<!-- <link href="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet"> -->
 <!-- <link href="//cdn.bootcss.com/layer/2.4/skin/layer.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="http://cdn.bowuting.com/cdn/semantic/semantic.min.css">
 
 
-<link rel="stylesheet"	href="//cdnsh.bowuting.com/cdn/nice-validator/dist/jquery.validator.css">
+<link rel="stylesheet"	href="//cdn.bowuting.com/cdn/nice-validator/dist/jquery.validator.css">
 
     <title>订单结算页</title>
 </head>
@@ -124,8 +125,8 @@
 <script src="//cdn.bootcss.com/layer/2.4/layer.min.js"></script>
 
 
-<script type="text/javascript" src="//cdnsh.bowuting.com/cdn/nice-validator/dist/jquery.validator.js"></script>
-<script type="text/javascript" src="//cdnsh.bowuting.com/cdn/nice-validator/dist/local/zh-CN.js"></script>
+<script type="text/javascript" src="//cdn.bowuting.com/cdn/nice-validator/dist/jquery.validator.js"></script>
+<script type="text/javascript" src="//cdn.bowuting.com/cdn/nice-validator/dist/local/zh-CN.js"></script>
 
 
 <script type="text/javascript">

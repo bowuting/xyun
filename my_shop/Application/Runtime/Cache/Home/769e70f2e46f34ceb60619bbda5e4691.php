@@ -6,11 +6,12 @@
         <meta charset="UTF-8">
 
 
-<link href="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet">
+<!-- <link href="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet"> -->
 <!-- <link href="//cdn.bootcss.com/layer/2.4/skin/layer.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="http://cdn.bowuting.com/cdn/semantic/semantic.min.css">
 
 
-<link rel="stylesheet"	href="//cdnsh.bowuting.com/cdn/nice-validator/dist/jquery.validator.css">
+<link rel="stylesheet"	href="//cdn.bowuting.com/cdn/nice-validator/dist/jquery.validator.css">
 
     </head>
     <body>
@@ -32,7 +33,7 @@
     </a>
     <?php
  if(empty($_SESSION['uid'])){ ?>
-      
+
         <a class="item" href="/xyun/my_shop/index.php/Login/Index/signin">
             登录
         </a>
@@ -48,7 +49,9 @@
     <?php  } ?>
 
     <a  class="item" href="/xyun/my_shop/index.php/Home/Index/shopcart">我的购物车</a>
-
+    <a class="item" href="/xyun/my_shop/index.php/Home/Index/myorder">
+        我的订单
+    </a>
     <!-- <form class="item" action="/xyun/my_shop/index.php/Home/Index/gallery" method="get">
       <div class="ui input">
           <input id="search" type="text"  name="keyword" placeholder="Search...">

@@ -19,28 +19,29 @@
           <table class="ui celled table">
             <volist name="orderlist" id="order">
               <tr>
-                <td>
-                  下单时间：{$order.order_time|date="Y-m-d",###}
-                </td>
-                <td>
-                  订单编号：{$order.order_no}
-                </td>
-                <td>
-                      <if condition="$order.order_ispay eq 1">
-                          已付款
-                          <else />
-
-                          <button type="button" id="pay_{$order.order_id}"
-                                  class="btn btn-primary btn-sm">立即付款</button>
-
-                      </if>
+                  <td>
+                    下单时间：{$order.order_time|date="Y-m-d",###}
                   </td>
                   <td>
-                    订单总价：{$order['order_totalprice'] / 100}
+
+                    订单编号：<span data-no="{$order.order_id}">{$order.order_no}</span>
                   </td>
+                  <td>
+                        <if condition="$order.order_ispay eq 1">
+                            已付款
+                            <else />
+                            <button type="button" id="pay_{$order.order_id}" data-id="{$order.order_id}"
+                                    class="btn btn-primary btn-sm btn-pay" data-click="pay" >立即付款</button>
+                        </if>
+                    </td>
+                    <td>
+                      订单总价：<span >{$order['order_totalprice'] / 100}</span>
+                    </td>
+                    <input type="hidden" data-price="{$order.order_id}" name="" value="{$order['order_totalprice']}">
+                    <input type="hidden" data-sign="{$order.order_id}" name="sign" value="{$order['sign']}">
+                    <input type="hidden" data-paypeople="{$order.order_id}" name="paypeople" value="{$order['paypeople']}">
                 </tr>
                   <volist name="orderdetail" id="v">
-
                       <if condition="$order['order_id'] eq $v['orderdetail_orderid']">
 
                           <tr>
@@ -58,14 +59,11 @@
                               </td>
                           </tr>
 
-                      </if>
-
-                </volist>
+                        </if>
+                    </volist>
 
             </volist>
           </table>
-
-
 
         </div>  <!--end sixteen wide column -->
 
@@ -80,44 +78,88 @@
 
 <script type="text/javascript">
 
-
-
-
-          <volist name="orderlist" id="vo">
-          var ppp = document.getElementById("pay_{$vo.order_id}");
-          if (ppp) {
-            ppp.onclick = function() {
-                asyncPay_{$vo.order_id}();
-            };
+  function asyncPay(id) {
+      if (typeof BC == "undefined") {
+          if (document.addEventListener) {
+              document.addEventListener('beecloud:onready', bcPay(id), false);
+          } else if (document.attachEvent) {
+              document.attachEvent('beecloud:onready', bcPay(id));
           }
-            // document.getElementById("pay_{$vo.order_id}").
+      } else {
+          bcPay(id);
+      }
+  }
 
-            function bcPay_{$vo.order_id}() {
-                BC.click({
-                "title": "商城订单："+"{$vo.order_no}",
-                "amount": "{$vo.order_totalprice}",
-                "out_trade_no": "{$vo.order_no}",
-                "sign" : "{$vo.sign}",
-                "return_url":"http://bowuting.cn/my_shop/index.php/Home/Index/myorder",
-                "trace_id" : "{$vo.paypeople}",
-                "debug":false,
+  function bcPay(id) {
 
-            });
-          };
+      var no = $('[data-no=' + id +']').text();
+      var price = $('[data-price=' + id +']').val();
+      var sign = $('[data-sign=' + id +']').val();
+      var paypeople = $('[data-paypeople=' + id +']').val();
+      console.log(no);
+      console.log(price);
+      console.log(sign);
+      console.log(paypeople);
 
-            function asyncPay_{$vo.order_id}() {
-                if (typeof BC == "undefined") {
-                    if (document.addEventListener) {
-                        document.addEventListener('beecloud:onready', bcPay_{$vo.order_id}, false);
-                    } else if (document.attachEvent) {
-                        document.attachEvent('beecloud:onready', bcPay_{$vo.order_id});
-                    }
-                } else {
-                    bcPay_{$vo.order_id}();
-                }
-            }
+      // return false;
+      BC.click({
+      "title": "my_shop:" + no ,
+      "amount": price,
+      "out_trade_no": no,
+      "sign" : sign,
+      "return_url":"http://bowuting.cn/my_shop/index.php/Home/Index/myorder",
+      "trace_id" : paypeople,
+      "debug":false,
+  });
+};
 
-            </volist>
+        // $(document).ready(function () {
+          $('.btn-pay').click(function() {
+            var id = $(this).attr('data-id');
+
+            asyncPay(id);
+
+
+          });
+        // });
+
+
+          // <volist name="orderlist" id="vo">
+          // var ppp = document.getElementById("pay_{$vo.order_id}");
+          // console.log(ppp);
+          // if (ppp) {
+          //   ppp.onclick = function() {
+          //       asyncPay_{$vo.order_id}();
+          //   };
+          // }
+          //
+          //
+          //   function bcPay_{$vo.order_id}() {
+          //       BC.click({
+          //       "title": "商城订单："+"{$vo.order_no}",
+          //       "amount": "{$vo.order_totalprice}",
+          //       "out_trade_no": "{$vo.order_no}",
+          //       "sign" : "{$vo.sign}",
+          //       "return_url":"http://bowuting.cn/my_shop/index.php/Home/Index/myorder",
+          //       "trace_id" : "{$vo.paypeople}",
+          //       "debug":false,
+          //
+          //   });
+          // };
+          //
+          //   function asyncPay_{$vo.order_id}() {
+          //       if (typeof BC == "undefined") {
+          //           if (document.addEventListener) {
+          //               document.addEventListener('beecloud:onready', bcPay_{$vo.order_id}, false);
+          //           } else if (document.attachEvent) {
+          //               document.attachEvent('beecloud:onready', bcPay_{$vo.order_id});
+          //           }
+          //       } else {
+          //           bcPay_{$vo.order_id}();
+          //       }
+          //   }
+          //
+          //   </volist>
 
 
 

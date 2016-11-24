@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
 
 
-<link href="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet">
+<!-- <link href="//cdn.bootcss.com/semantic-ui/2.2.6/semantic.min.css" rel="stylesheet"> -->
 <!-- <link href="//cdn.bootcss.com/layer/2.4/skin/layer.css" rel="stylesheet"> -->
+<link rel="stylesheet" href="http://cdn.bowuting.com/cdn/semantic/semantic.min.css">
 
 
-<link rel="stylesheet"	href="//cdnsh.bowuting.com/cdn/nice-validator/dist/jquery.validator.css">
+<link rel="stylesheet"	href="//cdn.bowuting.com/cdn/nice-validator/dist/jquery.validator.css">
 
     <title>订单结算页</title>
 </head>
@@ -69,22 +70,25 @@
           <h2>我的订单</h2>
           <table class="ui celled table">
             <?php if(is_array($orderlist)): $i = 0; $__LIST__ = $orderlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$order): $mod = ($i % 2 );++$i;?><tr>
-                <td>
-                  下单时间：<?php echo (date("Y-m-d",$order["order_time"])); ?>
-                </td>
-                <td>
-                  订单编号：<?php echo ($order["order_no"]); ?>
-                </td>
-                <td>
-                      <?php if($order["order_ispay"] == 1): ?>已付款
-                          <?php else: ?>
-
-                          <button type="button" id="pay_<?php echo ($order["order_id"]); ?>"
-                                  class="btn btn-primary btn-sm">立即付款</button><?php endif; ?>
+                  <td>
+                    下单时间：<?php echo (date("Y-m-d",$order["order_time"])); ?>
                   </td>
                   <td>
-                    订单总价：<?php echo ($order['order_totalprice'] / 100); ?>
+
+                    订单编号：<span data-no="<?php echo ($order["order_id"]); ?>"><?php echo ($order["order_no"]); ?></span>
                   </td>
+                  <td>
+                        <?php if($order["order_ispay"] == 1): ?>已付款
+                            <?php else: ?>
+                            <button type="button" id="pay_<?php echo ($order["order_id"]); ?>" data-id="<?php echo ($order["order_id"]); ?>"
+                                    class="btn btn-primary btn-sm btn-pay" data-click="pay" >立即付款</button><?php endif; ?>
+                    </td>
+                    <td>
+                      订单总价：<span ><?php echo ($order['order_totalprice'] / 100); ?></span>
+                    </td>
+                    <input type="hidden" data-price="<?php echo ($order["order_id"]); ?>" name="" value="<?php echo ($order['order_totalprice']); ?>">
+                    <input type="hidden" data-sign="<?php echo ($order["order_id"]); ?>" name="sign" value="<?php echo ($order['sign']); ?>">
+                    <input type="hidden" data-paypeople="<?php echo ($order["order_id"]); ?>" name="paypeople" value="<?php echo ($order['paypeople']); ?>">
                 </tr>
                   <?php if(is_array($orderdetail)): $i = 0; $__LIST__ = $orderdetail;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$v): $mod = ($i % 2 );++$i; if($order['order_id'] == $v['orderdetail_orderid']): ?><tr>
                               <td>
@@ -102,8 +106,6 @@
                           </tr><?php endif; endforeach; endif; else: echo "" ;endif; endforeach; endif; else: echo "" ;endif; ?>
           </table>
 
-
-
         </div>  <!--end sixteen wide column -->
 
     </div>  <!--end ui grid -->
@@ -118,48 +120,94 @@
 <script src="//cdn.bootcss.com/layer/2.4/layer.min.js"></script>
 
 
-<script type="text/javascript" src="//cdnsh.bowuting.com/cdn/nice-validator/dist/jquery.validator.js"></script>
-<script type="text/javascript" src="//cdnsh.bowuting.com/cdn/nice-validator/dist/local/zh-CN.js"></script>
+<script type="text/javascript" src="//cdn.bowuting.com/cdn/nice-validator/dist/jquery.validator.js"></script>
+<script type="text/javascript" src="//cdn.bowuting.com/cdn/nice-validator/dist/local/zh-CN.js"></script>
 
 <script id='spay-script' src='https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=dcf7509d-e33e-4629-ac84-fba86b6f6225'></script>
 
 <script type="text/javascript">
 
-
-
-
-          <?php if(is_array($orderlist)): $i = 0; $__LIST__ = $orderlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>var ppp = document.getElementById("pay_<?php echo ($vo["order_id"]); ?>");
-          if (ppp) {
-            ppp.onclick = function() {
-                asyncPay_<?php echo ($vo["order_id"]); ?>();
-            };
+  function asyncPay(id) {
+      if (typeof BC == "undefined") {
+          if (document.addEventListener) {
+              document.addEventListener('beecloud:onready', bcPay(id), false);
+          } else if (document.attachEvent) {
+              document.attachEvent('beecloud:onready', bcPay(id));
           }
-            // document.getElementById("pay_<?php echo ($vo["order_id"]); ?>").
+      } else {
+          bcPay(id);
+      }
+  }
 
-            function bcPay_<?php echo ($vo["order_id"]); ?>() {
-                BC.click({
-                "title": "商城订单："+"<?php echo ($vo["order_no"]); ?>",
-                "amount": "<?php echo ($vo["order_totalprice"]); ?>",
-                "out_trade_no": "<?php echo ($vo["order_no"]); ?>",
-                "sign" : "<?php echo ($vo["sign"]); ?>",
-                "return_url":"http://bowuting.cn/my_shop/index.php/Home/Index/myorder",
-                "trace_id" : "<?php echo ($vo["paypeople"]); ?>",
-                "debug":false,
+  function bcPay(id) {
 
-            });
-          };
+      var no = $('[data-no=' + id +']').text();
+      var price = $('[data-price=' + id +']').val();
+      var sign = $('[data-sign=' + id +']').val();
+      var paypeople = $('[data-paypeople=' + id +']').val();
+      console.log(no);
+      console.log(price);
+      console.log(sign);
+      console.log(paypeople);
 
-            function asyncPay_<?php echo ($vo["order_id"]); ?>() {
-                if (typeof BC == "undefined") {
-                    if (document.addEventListener) {
-                        document.addEventListener('beecloud:onready', bcPay_<?php echo ($vo["order_id"]); ?>, false);
-                    } else if (document.attachEvent) {
-                        document.attachEvent('beecloud:onready', bcPay_<?php echo ($vo["order_id"]); ?>);
-                    }
-                } else {
-                    bcPay_<?php echo ($vo["order_id"]); ?>();
-                }
-            }<?php endforeach; endif; else: echo "" ;endif; ?>
+      // return false;
+      BC.click({
+      "title": "my_shop:" + no ,
+      "amount": price,
+      "out_trade_no": no,
+      "sign" : sign,
+      "return_url":"http://bowuting.cn/my_shop/index.php/Home/Index/myorder",
+      "trace_id" : paypeople,
+      "debug":false,
+  });
+};
+
+        // $(document).ready(function () {
+          $('.btn-pay').click(function() {
+            var id = $(this).attr('data-id');
+
+            asyncPay(id);
+
+
+          });
+        // });
+
+
+          // <?php if(is_array($orderlist)): $i = 0; $__LIST__ = $orderlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$vo): $mod = ($i % 2 );++$i;?>// var ppp = document.getElementById("pay_<?php echo ($vo["order_id"]); ?>");
+          // console.log(ppp);
+          // if (ppp) {
+          //   ppp.onclick = function() {
+          //       asyncPay_<?php echo ($vo["order_id"]); ?>();
+          //   };
+          // }
+          //
+          //
+          //   function bcPay_<?php echo ($vo["order_id"]); ?>() {
+          //       BC.click({
+          //       "title": "商城订单："+"<?php echo ($vo["order_no"]); ?>",
+          //       "amount": "<?php echo ($vo["order_totalprice"]); ?>",
+          //       "out_trade_no": "<?php echo ($vo["order_no"]); ?>",
+          //       "sign" : "<?php echo ($vo["sign"]); ?>",
+          //       "return_url":"http://bowuting.cn/my_shop/index.php/Home/Index/myorder",
+          //       "trace_id" : "<?php echo ($vo["paypeople"]); ?>",
+          //       "debug":false,
+          //
+          //   });
+          // };
+          //
+          //   function asyncPay_<?php echo ($vo["order_id"]); ?>() {
+          //       if (typeof BC == "undefined") {
+          //           if (document.addEventListener) {
+          //               document.addEventListener('beecloud:onready', bcPay_<?php echo ($vo["order_id"]); ?>, false);
+          //           } else if (document.attachEvent) {
+          //               document.attachEvent('beecloud:onready', bcPay_<?php echo ($vo["order_id"]); ?>);
+          //           }
+          //       } else {
+          //           bcPay_<?php echo ($vo["order_id"]); ?>();
+          //       }
+          //   }
+          //
+          //<?php endforeach; endif; else: echo "" ;endif; ?>
 
 
 

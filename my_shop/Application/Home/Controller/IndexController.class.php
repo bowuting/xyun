@@ -199,7 +199,7 @@ class IndexController extends Controller {
 
           foreach($orderlist as $key=>$value){
 
-            $title = "商城订单：".$value['order_no'];
+            $title = "my_shop:".$value['order_no'];
             $amount = $value['order_totalprice'];//支付总价
             $out_trade_no = $value['order_no'];//内订单号，需要保证唯一性
 
@@ -207,7 +207,7 @@ class IndexController extends Controller {
             $orderlist[$key]['paypeople']=session('uid');
         }
           $this->assign('orderlist',$orderlist);
-          // dump($orderlist);
+          dump($orderlist);
 
 
           $orderdetail=M('order_detail');
