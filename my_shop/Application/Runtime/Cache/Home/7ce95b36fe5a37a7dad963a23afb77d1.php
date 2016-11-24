@@ -31,7 +31,7 @@
     </a>
     <?php
  if(empty($_SESSION['uid'])){ ?>
-      
+
         <a class="item" href="/xyun/my_shop/index.php/Login/Index/signin">
             登录
         </a>
@@ -47,7 +47,9 @@
     <?php  } ?>
 
     <a  class="item" href="/xyun/my_shop/index.php/Home/Index/shopcart">我的购物车</a>
-
+    <a class="item" href="/xyun/my_shop/index.php/Home/Index/myorder">
+        我的订单
+    </a>
     <!-- <form class="item" action="/xyun/my_shop/index.php/Home/Index/gallery" method="get">
       <div class="ui input">
           <input id="search" type="text"  name="keyword" placeholder="Search...">

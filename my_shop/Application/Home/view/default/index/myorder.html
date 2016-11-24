@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head lang="cn">
+
+    <include file="./Public/HomeCommon/head.html" />
+    <title>订单结算页</title>
+</head>
+
+<body>
+
+  <div class="ui container">
+    <include file="./Public/HomeCommon/nav.html" />
+
+    <div class="ui grid">
+
+        <div class="sixteen wide column">
+
+          <h2>我的订单</h2>
+          <table class="ui celled table">
+            <volist name="orderlist" id="order">
+              <tr>
+                <td>
+                  下单时间：{$order.order_time|date="Y-m-d",###}
+                </td>
+                <td>
+                  订单编号：{$order.order_no}
+                </td>
+                <td>
+                      <if condition="$order.order_ispay eq 1">
+                          已付款
+                          <else />
+
+                          <button type="button" id="pay_{$order.order_id}"
+                                  class="btn btn-primary btn-sm">立即付款</button>
+
+                      </if>
+                  </td>
+                  <td>
+                    订单总价：{$order['order_totalprice'] / 100}
+                  </td>
+                </tr>
+                  <volist name="orderdetail" id="v">
+
+                      <if condition="$order['order_id'] eq $v['orderdetail_orderid']">
+
+                          <tr>
+                              <td>
+                                  {$v.orderdetail_goodsname}
+                              </td>
+                              <td>
+                                  {$v['orderdetail_goodsprice']/100}
+                              </td>
+                              <td>
+                                  x{$v.orderdetail_quantity}
+                              </td>
+                              <td>
+                                  {$v['orderdetail_goodsprice']*$v['orderdetail_quantity']/100}
+                              </td>
+                          </tr>
+
+                      </if>
+
+                </volist>
+
+            </volist>
+          </table>
+
+
+
+        </div>  <!--end sixteen wide column -->
+
+    </div>  <!--end ui grid -->
+
+  </div> <!--end ui container -->
+
+</body>
+
+<include file="./Public/HomeCommon/js.html" />
+<script id='spay-script' src='https://jspay.beecloud.cn/1/pay/jsbutton/returnscripts?appId=dcf7509d-e33e-4629-ac84-fba86b6f6225'></script>
+
+<script type="text/javascript">
+
+
+
+
+          <volist name="orderlist" id="vo">
+          var ppp = document.getElementById("pay_{$vo.order_id}");
+          if (ppp) {
+            ppp.onclick = function() {
+                asyncPay_{$vo.order_id}();
+            };
+          }
+            // document.getElementById("pay_{$vo.order_id}").
+
+            function bcPay_{$vo.order_id}() {
+                BC.click({
+                "title": "商城订单："+"{$vo.order_no}",
+                "amount": "{$vo.order_totalprice}",
+                "out_trade_no": "{$vo.order_no}",
+                "sign" : "{$vo.sign}",
+                "return_url":"http://bowuting.cn/my_shop/index.php/Home/Index/myorder",
+                "trace_id" : "{$vo.paypeople}",
+                "debug":false,
+
+            });
+          };
+
+            function asyncPay_{$vo.order_id}() {
+                if (typeof BC == "undefined") {
+                    if (document.addEventListener) {
+                        document.addEventListener('beecloud:onready', bcPay_{$vo.order_id}, false);
+                    } else if (document.attachEvent) {
+                        document.attachEvent('beecloud:onready', bcPay_{$vo.order_id});
+                    }
+                } else {
+                    bcPay_{$vo.order_id}();
+                }
+            }
+
+            </volist>
+
+
+
+
+
+
+
+</script>
+
+</html>

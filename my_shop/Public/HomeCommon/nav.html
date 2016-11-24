@@ -11,7 +11,7 @@
     </a>
     <?php
       if(empty($_SESSION['uid'])){ ?>
-      
+
         <a class="item" href="__APP__/Login/Index/signin">
             登录
         </a>
@@ -27,7 +27,9 @@
     <?php  }  ?>
 
     <a  class="item" href="__APP__/Home/Index/shopcart">我的购物车</a>
-
+    <a class="item" href="__APP__/Home/Index/myorder">
+        我的订单
+    </a>
     <!-- <form class="item" action="__APP__/Home/Index/gallery" method="get">
       <div class="ui input">
           <input id="search" type="text"  name="keyword" placeholder="Search...">
