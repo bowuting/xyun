@@ -207,7 +207,7 @@ class IndexController extends Controller {
             $orderlist[$key]['paypeople']=session('uid');
         }
           $this->assign('orderlist',$orderlist);
-          dump($orderlist);
+          // dump($orderlist);
 
 
           $orderdetail=M('order_detail');

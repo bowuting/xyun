@@ -69,7 +69,7 @@
 
           <h2>我的订单</h2>
           <table class="ui celled table">
-            <?php if(is_array($orderlist)): $i = 0; $__LIST__ = $orderlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$order): $mod = ($i % 2 );++$i;?><tr>
+            <?php if(is_array($orderlist)): $i = 0; $__LIST__ = $orderlist;if( count($__LIST__)==0 ) : echo "" ;else: foreach($__LIST__ as $key=>$order): $mod = ($i % 2 );++$i;?><tr style="background-color:#e2e2e2">
                   <td>
                     下单时间：<?php echo (date("Y-m-d",$order["order_time"])); ?>
                   </td>
@@ -81,7 +81,7 @@
                         <?php if($order["order_ispay"] == 1): ?>已付款
                             <?php else: ?>
                             <button type="button" id="pay_<?php echo ($order["order_id"]); ?>" data-id="<?php echo ($order["order_id"]); ?>"
-                                    class="btn btn-primary btn-sm btn-pay" data-click="pay" >立即付款</button><?php endif; ?>
+                                    class="btn btn-primary  btn-pay" data-click="pay" style="background-color:#FF5722" >立即付款</button><?php endif; ?>
                     </td>
                     <td>
                       订单总价：<span ><?php echo ($order['order_totalprice'] / 100); ?></span>

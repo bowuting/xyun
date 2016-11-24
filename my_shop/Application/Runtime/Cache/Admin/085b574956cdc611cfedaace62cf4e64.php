@@ -26,7 +26,7 @@
 <link href="//cdn.bootcss.com/layer/2.4/skin/layer.css" rel="stylesheet">
 
 <!-- wangEditor css -->
-<link rel="stylesheet" href="//cdnsh.bowuting.com/cdn/wangEditor/dist/css/wangEditor.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdn.bowuting.com/cdn/wangEditor/dist/css/wangEditor.min.css" rel="stylesheet">
 
 
   </head>
@@ -128,7 +128,7 @@
 <script src="//cdn.bootcss.com/layer/2.4/layer.js"></script>
 
 <!-- wangEditor js -->
-<script src="//cdnsh.bowuting.com/cdn/wangEditor/dist/js/wangEditor.min.js"></script>
+<script src="//cdn.bowuting.com/cdn/wangEditor/dist/js/wangEditor.min.js"></script>
 
 
   <script type="text/javascript">

@@ -17,8 +17,8 @@
 
           <h2>我的订单</h2>
           <table class="ui celled table">
-            <volist name="orderlist" id="order">
-              <tr>
+            <volist name="orderlist" id="order" >
+              <tr style="background-color:#e2e2e2">
                   <td>
                     下单时间：{$order.order_time|date="Y-m-d",###}
                   </td>
@@ -31,7 +31,7 @@
                             已付款
                             <else />
                             <button type="button" id="pay_{$order.order_id}" data-id="{$order.order_id}"
-                                    class="btn btn-primary btn-sm btn-pay" data-click="pay" >立即付款</button>
+                                    class="btn btn-primary  btn-pay" data-click="pay" style="background-color:#FF5722" >立即付款</button>
                         </if>
                     </td>
                     <td>
